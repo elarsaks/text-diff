@@ -1,0 +1,166 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Text Diff</title>
+  <meta name="Elar Saks" content="SitePoint">
+	<meta name="viewport" content="width=device-width">
+
+	<style>
+	body {
+		margin: 0;
+		padding: 0;
+		background-color: #222222;
+  	background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;
+		font-family: Arial, Monospace, sans-serif;
+	}
+
+	#top-bar {
+		display: flex;
+		flex: 1;
+		justify-content: center;
+		height: 7vh;
+		font-size: 4em;
+		color: #FF9900;
+		text-transform: uppercase;
+		font-weight: 600;
+		padding: 0.5em;
+		padding-top: 0.5em;
+		white-space: pre-wrap;
+	}
+
+	#content-container {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+		color: #228DFF;
+	}
+
+	#compare-button {
+		display: flex;
+		margin-left: auto;
+		margin-right: auto;
+		justify-content: center;
+		text-transform: uppercase;
+		font-size: 2.5em;
+		margin-bottom: 1.5vh;
+		font-weight: 600;
+		padding: 0.1em 0.3em 0.1em 0.3em;
+		border-radius: 0.1em;
+		cursor: pointer;
+		transition: all 0.25s;
+		background-color: rgba(30, 30, 30, 0.3);
+		border: 1px solid #fff;
+		-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+   	-ms-user-select: none;
+   	user-select: none;
+	}
+
+	#compare-button:hover {
+		transform: scale(1.05);
+		background-color: rgba(1, 1, 1, 1);
+	}
+
+	#compare-button:active {
+		transform: scale(1);
+	}
+
+	textarea {
+		width: 47%;
+		height: 30vh;
+		border-radius: 0.2em;
+		font-size: 1.5em;
+		padding: 0.5em;
+		margin-bottom: 1.5vh;
+	}
+
+	#output {
+		width: 100%;
+		color:  #FF1177;
+		background-color: #fff;
+		text-align: center;
+	}
+
+	h1 {
+		text-align: center;
+		margin: 0.5em;
+	}
+
+	a{
+		text-decoration: none;
+		color: #fff;
+		font-size: 0.9em;
+		font-weight: lighter;
+	}
+
+	@media /* only screen and (orientation: portrait) and */(max-width: 767px) {
+
+		#top-bar {
+			font-size: 2em;
+		}
+
+		#content-container {
+			width: 95%;
+		}
+
+		textarea {
+			width: 100%;
+		}
+
+		#compare-button {
+			font-size: 1.5em;
+			margin-top: 1.vh;
+			margin-bottom: 1.5vh;
+		}
+
+		a {
+			font-size: 0.7em;
+		}
+
+	} 
+
+
+	</style>
+</head>
+
+<body>
+	<div id="top-bar">Text Diff </div>
+	<div id="content-container">
+		<textarea 
+			type="text" 
+			id="left-input" 
+			autofocus
+			placeholder="Write here some text to compare."
+		></textarea>
+
+		<textarea 
+			type="text" 
+			id="left-input" 
+			placeholder="Write here some other text to compare against."
+		></textarea>
+
+		<div id="compare-button" > COMPARE</div>
+
+		<textarea 
+			type="text" 
+			id="output"
+			readonly
+		>fsegzferg</textarea>
+	</div>
+
+	<h1>
+		<a href="https://www.linkedin.com/in/elarsaks/" target="_blank" >ELAR SAKS</a>
+	</h1> 
+	
+
+	<script>
+		console.log('Everything runs')
+		</script>
+</body>
+</html>
