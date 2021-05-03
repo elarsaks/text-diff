@@ -6,14 +6,19 @@
   <title>Text Diff</title>
   <meta name="Elar Saks" content="SitePoint">
 	<meta name="viewport" content="width=device-width">
+	<link rel="icon" href="./favicon.ico" type="image/x-icon"/>
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
 
 	<style>
 	body {
 		margin: 0;
 		padding: 0;
-		background-color: #222222;
-  	background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;
 		font-family: Arial, Monospace, sans-serif;
+		background-color: rgb(32, 32, 32);
+		/* This fancy gradient background is not written by me, I found it on Stack OverFlow. */
+  	background-image: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1)), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(to bottom, rgb(8, 8, 8), rgb(32, 32, 32));
+  	background-size: 100% 100%, 10px 10px, 10px 10px, 10px 5px;
+  	background-position: 0px 0px, 0px 0px, 5px 5px, 0px 0px;
 	}
 
 	#top-bar {
@@ -82,9 +87,12 @@
 
 	#output {
 		width: 100%;
-		color:  #FF1177;
-		background-color: #fff;
+		font-size: 1.5em;
 		text-align: center;
+		color:  black;
+		background-color: #fff;
+		height: 30vh;
+		padding: 0.5em;
 	}
 
 	h1 {
@@ -126,6 +134,18 @@
 	} 
 
 
+	ins {
+    text-decoration: none;
+    background-color: #51cc09;
+	}
+
+	del {
+		text-decoration: line-through;
+		background-color: #FF1177;;
+		color: rgb(0, 0, 0);
+	}
+
+
 	</style>
 </head>
 
@@ -137,21 +157,22 @@
 			id="left-input" 
 			autofocus
 			placeholder="Write here some text to compare."
-		></textarea>
+		>This is a hard coding exercise. Is it?</textarea>
 
 		<textarea 
 			type="text" 
-			id="left-input" 
+			id="right-input" 
 			placeholder="Write here some other text to compare against."
-		></textarea>
+		>This is not a coding exorcist. True!</textarea>
 
-		<div id="compare-button" > COMPARE</div>
+		<div 
+			id="compare-button" 
+			onClick="compare()"
+		> COMPARE</div>
 
-		<textarea 
-			type="text" 
+		<div 
 			id="output"
-			readonly
-		>fsegzferg</textarea>
+		> Here comes the cont net <del>delete </del> <ins>insert</ins></div>
 	</div>
 
 	<h1>
@@ -160,7 +181,85 @@
 	
 
 	<script>
-		console.log('Everything runs')
+		
+		const compare = () => {
+			let s1 = document.getElementById("left-input").value;
+			let s2 = document.getElementById("right-input").value;
+			s1Sentences = s1.split(/[\\.!?]/)
+			s2Sentences = s2.split(/[\\.!?]/)
+
+			// Todo: Loop over sentences.
+			compareSentences(s1Sentences[0].split(' '), s2Sentences[0].split(' '))
+		}
+
+		const compareSentences = (s1, s2) => {
+
+			let map = {};
+			let finalString = [];
+
+			function helper(m, n){
+				// Stop when it has looped over both sentences
+				if(m === 0 || n === 0){
+					console.log(finalString)
+					return 0
+				};
+
+				let key = `${m}-${n}`
+
+				if(!(key in map)){
+
+					// Check for matching words
+					if(s1[m-1] == s2[n-1]){
+
+						finalString.push(s1[m-1])
+						map[key] = helper(m-1, n-1) + 1	
+					} else {
+						map[key] = Math.max(helper(m-1, n), helper(m, n-1))
+						//console.log("map[key]: ", map[key], "key: ", key, "map: ", map)
+					}
+				}
+				
+				return map[key]
+			}
+
+			let m = s1.length
+			let n = s2.length
+
+			return helper(m, n)
+		}
+
+/*
+ 
+		
+		
+		let finalSentence = '';
+		
+		const compareSentences = (sen1, m, sen2, n) => {
+			//console.log(sen1, m, sen2, n)
+			if(m === 0 || n === 0) {		
+				return finalSentence
+
+			} else if(sen1[m-1] === sen2[n-1]){
+				console.log(finalSentence)
+				finalSentence = finalSentence + ' ' 
+					+ sen1[m-1] + ' '
+					+ compareSentences(sen1, m-1, sen2, n-1)
+
+			} else {
+				let excludeLastOfS1 = compareSentences(sen1, m - 1, sen2, n);
+       	let excludeLastOfS2 = compareSentences(sen1, m, sen2, n - 1);
+					console.log(m)
+
+					finalSentence = excludeLastOfS1 > excludeLastOfS2 ? excludeLastOfS1 : excludeLastOfS2
+			} 
+			return finalSentence
+		}
+		*/
+
+
+		
+		
+
 		</script>
 </body>
 </html>
