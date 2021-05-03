@@ -181,13 +181,18 @@
 		const compare = () => {
 			let s1 = document.getElementById("left-input").value;
 			let s2 = document.getElementById("right-input").value;
-			s1Sentences = s1.split(/[\\.!?]/)
-			s2Sentences = s2.split(/[\\.!?]/)
+			s1Sentences = s1.match( /[^\.!\?]+[\.!\?]+/g );
+			s2Sentences = s2.match( /[^\.!\?]+[\.!\?]+/g );
 
 			// Todo: Loop over sentences.
 			let foo = LCS(s1Sentences[0].split(' '), s2Sentences[0].split(' '))
-
 			generateOutPut(s1Sentences[0].split(' '), s2Sentences[0].split(' '), foo)
+
+			/* TODO:
+			*	 1. If 1 textbox has less sentences - display full sentence removal or addition
+			*  2. Find a way to improve on word indexing. 
+			*  3. Is there a better way to implement LCS function?
+			*/
 		}
 
 		const generateOutPut = (s1, s2, lcs) => {
@@ -202,6 +207,7 @@
 			// Add words that have been added in a second text
 			s2.forEach((word, i) => !lcs.includes(word) ? s2AddedWordIndexes.push(i) : null );
 			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
+			
 
 			// Append text to output element
 			var elem = document.querySelector('#output');
