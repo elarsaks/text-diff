@@ -169,13 +169,7 @@
 			onClick="compare()"
 		> COMPARE</div>
 
-		<div 
-			id="output"
-		> Here comes the cont net <del>delete </del> <ins>insert</ins>
-		<p id="testoutput">This is some text </p>
-	</div>
-
-
+		<div id="output"></div>
 	</div>
 
 	<h1>
@@ -198,20 +192,21 @@
 
 		const generateOutPut = (s1, s2, lcs) => {
 			let outPut = lcs
-			let test = []
-			s1.forEach((element, i) => !lcs.includes(element)? test.push(i) : null );
+			let s1DeletedWordIndexes = []
+			let s2AddedWordIndexes = []
 
-			test.forEach(i => outPut.splice(i, 0, `<del>${s1[i]}</del>`))
+			// Add words that have been deleted from first text
+			s1.forEach((word, i) => !lcs.includes(word)? s1DeletedWordIndexes.push(i) : null );
+			s1DeletedWordIndexes.forEach(i => outPut.splice(i, 0, `<del>${s1[i]}</del>`))
 
-			var paragraph = document.getElementById("testoutput");
-			var text = document.createTextNode(lcs.join(' '));
-			paragraph.appendChild(text);
-			console.log(lcs.join(' '))
+			// Add words that have been added in a second text
+			s2.forEach((word, i) => !lcs.includes(word) ? s2AddedWordIndexes.push(i) : null );
+			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
 
+			// Append text to output element
 			var elem = document.querySelector('#output');
 			var text = elem.innerHTML;
 			elem.innerHTML = lcs.join(' ')
-
 		}
 
 
