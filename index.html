@@ -133,7 +133,6 @@
 
 	} 
 
-
 	ins {
     text-decoration: none;
     background-color: #51cc09;
@@ -141,7 +140,7 @@
 
 	del {
 		text-decoration: line-through;
-		background-color: #FF1177;;
+		background-color: #ff1145;;
 		color: rgb(0, 0, 0);
 	}
 
@@ -179,23 +178,38 @@
 
 	<script>
 		const compare = () => {
+			// Input selectors
 			let s1 = document.getElementById("left-input").value;
 			let s2 = document.getElementById("right-input").value;
 			s1Sentences = s1.match( /[^\.!\?]+[\.!\?]+/g );
 			s2Sentences = s2.match( /[^\.!\?]+[\.!\?]+/g );
 
-			// Todo: Loop over sentences.
-			let foo = LCS(s1Sentences[0].split(' '), s2Sentences[0].split(' '))
-			generateOutPut(s1Sentences[0].split(' '), s2Sentences[0].split(' '), foo)
+			// Out put selectors
+			var elem = document.querySelector('#output');
+			var text = elem.innerHTML;
 
-			/* TODO:
-			*	 1. If 1 textbox has less sentences - display full sentence removal or addition
-			*  2. Find a way to improve on word indexing. 
-			*  3. Is there a better way to implement LCS function?
-			*/
+			// Just a shortcut, to avoid comparing sentences against eachother
+			if(s1Sentences.length !== s2Sentences.length){
+				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
+			}
+
+			output = s1Sentences.map((s1, i) => {
+				let lcs = LCS(s1.split(' '), s2Sentences[i].split(' '))
+				generateOutPut(s1.split(' '), s2Sentences[i].split(' '), lcs)
+			})	
+			
+
+			// YOU left off here! 
+			// See console log and filter out empty "" from sentences.
+
+
+			elem.innerHTML = output;
+			console.log(output)
 		}
 
 		const generateOutPut = (s1, s2, lcs) => {
+			console.log(s1, s2, lcs)
+
 			let outPut = lcs
 			let s1DeletedWordIndexes = []
 			let s2AddedWordIndexes = []
@@ -207,15 +221,9 @@
 			// Add words that have been added in a second text
 			s2.forEach((word, i) => !lcs.includes(word) ? s2AddedWordIndexes.push(i) : null );
 			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
-			
 
-			// Append text to output element
-			var elem = document.querySelector('#output');
-			var text = elem.innerHTML;
-			elem.innerHTML = lcs.join(' ')
+			return lcs.join(' ') + '<br></br>'
 		}
-
-
 
 		// TODO: Work on this function!
 		const LCS = (s1, s2) => {
