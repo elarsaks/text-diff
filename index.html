@@ -145,7 +145,6 @@
 		color: rgb(0, 0, 0);
 	}
 
-
 	</style>
 </head>
 
@@ -172,7 +171,11 @@
 
 		<div 
 			id="output"
-		> Here comes the cont net <del>delete </del> <ins>insert</ins></div>
+		> Here comes the cont net <del>delete </del> <ins>insert</ins>
+		<p id="testoutput">This is some text </p>
+	</div>
+
+
 	</div>
 
 	<h1>
@@ -181,7 +184,6 @@
 	
 
 	<script>
-		
 		const compare = () => {
 			let s1 = document.getElementById("left-input").value;
 			let s2 = document.getElementById("right-input").value;
@@ -189,76 +191,61 @@
 			s2Sentences = s2.split(/[\\.!?]/)
 
 			// Todo: Loop over sentences.
-			compareSentences(s1Sentences[0].split(' '), s2Sentences[0].split(' '))
+			let foo = LCS(s1Sentences[0].split(' '), s2Sentences[0].split(' '))
+
+			generateOutPut(s1Sentences[0].split(' '), s2Sentences[0].split(' '), foo)
 		}
 
-		const compareSentences = (s1, s2) => {
+		const generateOutPut = (s1, s2, lcs) => {
+			let outPut = lcs
+			let test = []
+			s1.forEach((element, i) => !lcs.includes(element)? test.push(i) : null );
 
+			test.forEach(i => outPut.splice(i, 0, `<del>${s1[i]}</del>`))
+
+			var paragraph = document.getElementById("testoutput");
+			var text = document.createTextNode(lcs.join(' '));
+			paragraph.appendChild(text);
+			console.log(lcs.join(' '))
+
+			var elem = document.querySelector('#output');
+			var text = elem.innerHTML;
+			elem.innerHTML = lcs.join(' ')
+
+		}
+
+
+
+		// TODO: Work on this function!
+		const LCS = (s1, s2) => {
 			let map = {};
 			let finalString = [];
 
 			function helper(m, n){
 				// Stop when it has looped over both sentences
-				if(m === 0 || n === 0){
-					console.log(finalString)
-					return 0
-				};
+				if(m === 0 || n === 0)return 0
 
 				let key = `${m}-${n}`
 
 				if(!(key in map)){
-
 					// Check for matching words
 					if(s1[m-1] == s2[n-1]){
-
-						finalString.push(s1[m-1])
 						map[key] = helper(m-1, n-1) + 1	
+						finalString.push(s1[m-1])
 					} else {
 						map[key] = Math.max(helper(m-1, n), helper(m, n-1))
-						//console.log("map[key]: ", map[key], "key: ", key, "map: ", map)
 					}
 				}
 				
+				// Return value when key is in map (runs faster)
 				return map[key]
 			}
 
-			let m = s1.length
-			let n = s2.length
+			helper(s1.length, s2.length)
 
-			return helper(m, n)
+			return finalString
 		}
 
-/*
- 
-		
-		
-		let finalSentence = '';
-		
-		const compareSentences = (sen1, m, sen2, n) => {
-			//console.log(sen1, m, sen2, n)
-			if(m === 0 || n === 0) {		
-				return finalSentence
-
-			} else if(sen1[m-1] === sen2[n-1]){
-				console.log(finalSentence)
-				finalSentence = finalSentence + ' ' 
-					+ sen1[m-1] + ' '
-					+ compareSentences(sen1, m-1, sen2, n-1)
-
-			} else {
-				let excludeLastOfS1 = compareSentences(sen1, m - 1, sen2, n);
-       	let excludeLastOfS2 = compareSentences(sen1, m, sen2, n - 1);
-					console.log(m)
-
-					finalSentence = excludeLastOfS1 > excludeLastOfS2 ? excludeLastOfS1 : excludeLastOfS2
-			} 
-			return finalSentence
-		}
-		*/
-
-
-		
-		
 
 		</script>
 </body>
