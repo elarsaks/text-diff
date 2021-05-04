@@ -204,14 +204,18 @@
 				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
 			}
 
+			let test = s1.map((sen, i) => LCS(sen, s2[i]))
+
+			console.log
+
 			// Compare inputs and map the result to output
-			const output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
+			//const output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
 
 			// Merge sentences into a single string and pass it to the html
-			elem.innerHTML = output.join(' ');
+			// elem.innerHTML = output.join(' ');
 		}
 
-		// Takes 2 original inputs and merges them together with LCS
+		/* Takes 2 original inputs and merges them together with LCS
 		const generateOutPut = (s1, s2, lcs) => {
 			const outPut = lcs
 			let s1DeletedWordIndexes = []
@@ -226,37 +230,146 @@
 			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
 
 			return lcs.join(' ') + '<br/>'
-		}
+		} */
 
-		// Takes 2 input strings, finds and returns Longest Common Subsequence
-		const LCS = (s1, s2) => {
-			let map = {};
-			let finalString = [];
+		// UNDER DEVELOPMENT
+		const LCS = (s1, s2) => lcsBackTrack(lcsLengths(s1,s2), s1, s2, s1.length, s2.length)
+			
+		function lcsLengths(listX, listY) {
+        var lenX = listX.length;
+        var lenY = listY.length;
+        
+        // Create empty matrix
+        var memo = [lenX+1];
+        for (var i = 0; i < lenX+1; i++) {
+                memo[i] = [lenY+1];
+                for (var j = 0; j < lenY+1; j++) {
+                        memo[i][j] = 0;
+                }
+        }
 
-			function helper(m, n){
-				// Stop when it has looped over both sentences
-				if(m === 0 || n === 0)return 0
+        // Memorize the lcs length at each position in the matrix
+        for (var i = 1; i < lenX+1; i++) {
+                for (var j = 1; j < lenY+1; j++) {
+                        if (listX[i-1] == listY[j-1]) {
+                                memo[i][j] = memo[i-1][j-1] + 1;
+                        }
+                        else {
+                                memo[i][j] = Math.max(
+                                        memo[i][j-1],
+                                        memo[i-1][j]);
+                        }
+                }
+        }
 
-				let key = `${m}-${n}`
+        return memo;
+}
 
-				if(!(key in map)){
-					// Check for matching words
-					if(s1[m-1] == s2[n-1]){
-						map[key] = helper(m-1, n-1) + 1	
-						finalString.push(s1[m-1])
-					} else {
-						map[key] = Math.max(helper(m-1, n), helper(m, n-1))
-					}
-				}
-				
-				// Return value when key is in map (runs faster)
-				return map[key]
+// Backtrack values from matrix
+function lcsBackTrack(memo, listX, listY, posX, posY) {
+        
+        // base case 
+    if (posX == 0 || posY == 0) return "";
+        
+    // matcth => go up and left
+    if (listX [posX-1] == listY[posY-1]) {
+      return lcsBackTrack(memo, listX, listY, posX-1, posY-1) + listX[posX-1];
+    } else {
+
+			if (memo[posX][posY-1] > memo[posX-1][posY]) { 
+				// go up
+				return lcsBackTrack(memo, listX, listY, posX, posY-1);
+			}       
+			else {
+				// go left
+				return lcsBackTrack(memo, listX, listY, posX-1, posY);
 			}
+			
+  }
+}
 
-			helper(s1.length, s2.length)
 
-			return finalString
-		}
+
+/*
+
+/**
+ * Find a longest common subsenquence.
+ * Note: It might not be the only possible longest common subsequence!
+ *
+function lcs(listX, listY) {
+        return lcsBackTrack(
+                lcsLengths(listX, listY),
+                listX, listY, 
+                listX.length, listY.length);
+}
+
+/**
+ * Iteratively memoize a matrix of longest common subsequence lengths.
+ *
+function lcsLengths(listX, listY) {
+        var lenX = listX.length;
+        var lenY = listY.length;
+        
+        // Initialize a lenX+1 x lenY+1 matrix
+        var memo = [lenX+1];
+        for (var i = 0; i < lenX+1; i++) {
+                memo[i] = [lenY+1];
+                for (var j = 0; j < lenY+1; j++) {
+                        memo[i][j] = 0;
+                }
+        }
+                
+        // Memoize the lcs length at each position in the matrix
+        for (var i = 1; i < lenX+1; i++) {
+                for (var j = 1; j < lenY+1; j++) {
+                        if (listX[i-1] == listY[j-1]) {
+                                memo[i][j] = memo[i-1][j-1] + 1;
+                        }
+                        else {
+                                memo[i][j] = Math.max(
+                                        memo[i][j-1],
+                                        memo[i-1][j]);
+                        }
+                }
+        }
+        console.log(memo)
+        return memo;
+}
+
+/**
+ * Recursively read back a memoized matrix of longest common subsequence lengths
+ * to find a longest common subsequence.
+ *
+function lcsBackTrack(memo, listX, listY, posX, posY) {
+        
+        // base case 
+        if (posX == 0 || posY == 0) {
+                return "";
+        }
+        
+        // matcth => go up and left
+        else if (listX [posX-1] == listY[posY-1]) {
+                return lcsBackTrack(memo, listX, listY, posX-1, posY-1) + listX[posX-1];
+        }
+        
+        else {
+                // go up
+                if (memo[posX][posY-1] > memo[posX-1][posY]) { 
+                        return lcsBackTrack(memo, listX, listY, posX, posY-1);
+                }
+                
+                // go left
+                else {
+                        return lcsBackTrack(memo, listX, listY, posX-1, posY);
+                }
+        }
+}
+
+
+var lcsArray = lcs(["ab","cd","ef"], ["aa", "ab", "ef", "bb"]);
+var lcsString = lcs("antler", "lantern");
+
+console.log(lcsString) */
 		</script>
 </body>
 </html>
