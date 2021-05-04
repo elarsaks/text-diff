@@ -177,50 +177,7 @@
 	
 
 	<script>
-		const compare = () => {
-			// Out put selectors
-			const elem = document.querySelector('#output');
-			const text = elem.innerHTML;
-
-			// Input selectors
-			let s1 = document.getElementById("left-input").value;
-			let s2 = document.getElementById("right-input").value;
-
-			// Break input strings into arrays of sentences, that are arrays of words
-			s1 = s1.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
-			s2 = s2.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
-
-			// Give error message if both inputs don'y have same number of sentences
-			if(s1.length !== s2.length){
-				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
-			}
-
-			// Compare inputs and map the result to output
-			output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
-
-			// Merge sentences into a single string and pass it to the html
-			elem.innerHTML = output.join(' ');
-		}
-
-		const generateOutPut = (s1, s2, lcs) => {
-			//console.log(s1, s2, lcs)
-
-			let outPut = lcs
-			let s1DeletedWordIndexes = []
-			let s2AddedWordIndexes = []
-
-			// Add words that have been deleted from first text
-			s1.forEach((word, i) => !lcs.includes(word)? s1DeletedWordIndexes.push(i) : null );
-			s1DeletedWordIndexes.forEach(i => outPut.splice(i, 0, `<del>${s1[i]}</del>`))
-
-			// Add words that have been added in a second text
-			s2.forEach((word, i) => !lcs.includes(word) ? s2AddedWordIndexes.push(i) : null );
-			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
-
-			return lcs.join(' ') + '<br></br>'
-		}
-
-		// TODO: Work on this function!
+		// Takes 2 input strings, finds and returns Longest Common Subsequence
 		const LCS = (s1, s2) => {
 			let map = {};
 			let finalString = [];
@@ -250,7 +207,49 @@
 			return finalString
 		}
 
+		// Takes 2 original inputs and merges them together with LCS
+		const generateOutPut = (s1, s2, lcs) => {
+			let outPut = lcs
+			let s1DeletedWordIndexes = []
+			let s2AddedWordIndexes = []
 
+			// Add words that have been deleted from first text
+			s1.forEach((word, i) => !lcs.includes(word)? s1DeletedWordIndexes.push(i) : null );
+			s1DeletedWordIndexes.forEach(i => outPut.splice(i, 0, `<del>${s1[i]}</del>`))
+
+			// Add words that have been added in a second text
+			s2.forEach((word, i) => !lcs.includes(word) ? s2AddedWordIndexes.push(i) : null );
+			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
+
+			return lcs.join(' ') + '<br></br>'
+		}
+
+		
+		// THIS IS THE MAIN CONTROLLER
+		const compare = () => {
+			// Out put selectors
+			const elem = document.querySelector('#output');
+			const text = elem.innerHTML;
+
+			// Input selectors
+			let s1 = document.getElementById("left-input").value;
+			let s2 = document.getElementById("right-input").value;
+
+			// Break input strings into arrays of sentences, that are arrays of words
+			s1 = s1.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
+			s2 = s2.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
+
+			// Give error message if both inputs don'y have same number of sentences
+			if(s1.length !== s2.length){
+				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
+			}
+
+			// Compare inputs and map the result to output
+			const output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
+
+			// Merge sentences into a single string and pass it to the html
+			elem.innerHTML = output.join(' ');
+		}
 		</script>
 </body>
 </html>
