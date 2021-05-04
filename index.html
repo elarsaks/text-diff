@@ -195,20 +195,14 @@
 
 			output = s1Sentences.map((s1, i) => {
 				let lcs = LCS(s1.split(' '), s2Sentences[i].split(' '))
-				generateOutPut(s1.split(' '), s2Sentences[i].split(' '), lcs)
+				return generateOutPut(s1.split(' '), s2Sentences[i].split(' '), lcs)
 			})	
 			
-
-			// YOU left off here! 
-			// See console log and filter out empty "" from sentences.
-
-
-			elem.innerHTML = output;
-			console.log(output)
+			elem.innerHTML = output.join(' ');
 		}
 
 		const generateOutPut = (s1, s2, lcs) => {
-			console.log(s1, s2, lcs)
+			//console.log(s1, s2, lcs)
 
 			let outPut = lcs
 			let s1DeletedWordIndexes = []
