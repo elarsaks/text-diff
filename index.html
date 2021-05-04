@@ -93,6 +93,19 @@
 		background-color: #fff;
 		height: 30vh;
 		padding: 0.5em;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+
+	ins {
+    text-decoration: none;
+    background-color: #51cc09;
+	}
+
+	del {
+		text-decoration: line-through;
+		background-color: #ff1145;;
+		color: rgb(0, 0, 0);
 	}
 
 	h1 {
@@ -133,17 +146,6 @@
 
 	} 
 
-	ins {
-    text-decoration: none;
-    background-color: #51cc09;
-	}
-
-	del {
-		text-decoration: line-through;
-		background-color: #ff1145;;
-		color: rgb(0, 0, 0);
-	}
-
 	</style>
 </head>
 
@@ -155,13 +157,15 @@
 			id="left-input" 
 			autofocus
 			placeholder="Write here some text to compare."
-		>This is a hard coding exercise. Is it?</textarea>
+		>This is a hard coding exercise. Is it? <!-- File comparison can be difficult, this diff checker will lets you easily compare text files online! Indeed it can be helpful to compare two text documents (for example to see what has changed in this text). -->
+		</textarea>
 
 		<textarea 
 			type="text" 
 			id="right-input" 
 			placeholder="Write here some other text to compare against."
-		>This is not a coding exorcist. True!</textarea>
+		>This is not a coding exorcist. True! <!-- File comparison can be difficult, diff checker will lets you easily compare text files online! Indeed it can be helpful to compare two text documents (for example to see what has changed in this text). -->
+		</textarea>
 
 		<div 
 			id="compare-button" 
@@ -209,6 +213,8 @@
 
 		// Takes 2 original inputs and merges them together with LCS
 		const generateOutPut = (s1, s2, lcs) => {
+			console.log(s1, s2, lcs)
+
 			let outPut = lcs
 			let s1DeletedWordIndexes = []
 			let s2AddedWordIndexes = []
@@ -221,10 +227,9 @@
 			s2.forEach((word, i) => !lcs.includes(word) ? s2AddedWordIndexes.push(i) : null );
 			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
 
-			return lcs.join(' ') + '<br></br>'
+			return lcs.join(' ') + '<br/>'
 		}
 
-		
 		// THIS IS THE MAIN CONTROLLER
 		const compare = () => {
 			// Out put selectors
