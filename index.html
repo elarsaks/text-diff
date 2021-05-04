@@ -206,7 +206,7 @@
 
 			let test = s1.map((sen, i) => LCS(sen, s2[i]))
 
-			console.log
+			//console.log(test)
 
 			// Compare inputs and map the result to output
 			//const output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
@@ -238,6 +238,8 @@
 		function lcsLengths(listX, listY) {
         var lenX = listX.length;
         var lenY = listY.length;
+
+			//	console.log(listX)
         
         // Create empty matrix
         var memo = [lenX+1];
@@ -261,31 +263,44 @@
                         }
                 }
         }
-
+				
         return memo;
 }
 
+let finalString = []
+
 // Backtrack values from matrix
 function lcsBackTrack(memo, listX, listY, posX, posY) {
-        
+	console.log(finalString)
         // base case 
     if (posX == 0 || posY == 0) return "";
         
-    // matcth => go up and left
+    // match => go up and left
     if (listX [posX-1] == listY[posY-1]) {
+
+			finalString.push(listX [posX-1])
+		
       return lcsBackTrack(memo, listX, listY, posX-1, posY-1) + listX[posX-1];
     } else {
+			
 
+			// Fnd out withc if statement follows witch array
 			if (memo[posX][posY-1] > memo[posX-1][posY]) { 
+
+				console.log(listY[posY-1], posY-1)
 				// go up
-				return lcsBackTrack(memo, listX, listY, posX, posY-1);
+				return lcsBackTrack(memo, listX, listY, posX, posY-1); // Y-aaxis
 			}       
 			else {
+
+			finalString.splice(posX-1, 0, /* `<del>${ */ listX[posX-1] /* }</del>`*/)
 				// go left
 				return lcsBackTrack(memo, listX, listY, posX-1, posY);
 			}
 			
   }
+
+	
 }
 
 
