@@ -178,26 +178,27 @@
 
 	<script>
 		const compare = () => {
+			// Out put selectors
+			const elem = document.querySelector('#output');
+			const text = elem.innerHTML;
+
 			// Input selectors
 			let s1 = document.getElementById("left-input").value;
 			let s2 = document.getElementById("right-input").value;
-			s1Sentences = s1.match( /[^\.!\?]+[\.!\?]+/g );
-			s2Sentences = s2.match( /[^\.!\?]+[\.!\?]+/g );
 
-			// Out put selectors
-			var elem = document.querySelector('#output');
-			var text = elem.innerHTML;
+			// Break input strings into arrays of sentences, that are arrays of words
+			s1 = s1.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
+			s2 = s2.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
 
-			// Just a shortcut, to avoid comparing sentences against eachother
-			if(s1Sentences.length !== s2Sentences.length){
+			// Give error message if both inputs don'y have same number of sentences
+			if(s1.length !== s2.length){
 				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
 			}
 
-			output = s1Sentences.map((s1, i) => {
-				let lcs = LCS(s1.split(' '), s2Sentences[i].split(' '))
-				return generateOutPut(s1.split(' '), s2Sentences[i].split(' '), lcs)
-			})	
-			
+			// Compare inputs and map the result to output
+			output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
+
+			// Merge sentences into a single string and pass it to the html
 			elem.innerHTML = output.join(' ');
 		}
 
