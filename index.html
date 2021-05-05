@@ -122,10 +122,7 @@
 			font-weight: lighter;
 		}
 
-		@media
-
-		/* only screen and (orientation: portrait) and */
-		(max-width: 767px) {
+		@media (max-width: 767px) {
 
 			#top-bar {
 				font-size: 2em;
@@ -161,14 +158,14 @@
 			id="left-input" 
 			autofocus
 			placeholder="Write here some text to compare."
-			>This is a hard coding exercise. Is it? </textarea>
+			></textarea>
 
 			<textarea 
 				type="text" 
 				id="right-input" 
 				autofocus
-				placeholder="Write here some text to compare."
-			>This is not a coding exorcist. True! </textarea>
+				placeholder="Write here some text to compare against."
+			></textarea>
 
 		<div id="compare-button" onClick="compare()"> COMPARE</div>
 
@@ -193,25 +190,20 @@
 			let s1 = document.getElementById("left-input").value;
 			let s2 = document.getElementById("right-input").value;
 
-			// Break input strings into arrays of sentences, that are arrays of words
-			s1 = s1.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
-			s2 = s2.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
+			// If input has (. ! ?) divide it into sentences and then words, else divide it straight into words
+			s1 = s1.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' ')) 
+			s2 = s2.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' ')) 
 
-			// Remove empty strings
-			s1 = s1.map(sen => sen.filter(word => word.length > 0))
-			s2 = s2.map(sen => sen.filter(word => word.length > 0))
-
-			// Give error message if both inputs don't have same number of sentences
+			// Output error message if both inputs don't have same number of sentences
 			if (s1.length !== s2.length) {
 				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
+			} else {
+				// Map checked sentences to the outPut
+				elem.innerHTML = s1.map((sen, i) =>
+					getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' '))
+					.join(' ') // .join(' ') Is called twice to remove commas coming from nested arrays 
 			}
-
-			// Map checked sentences to the outPut
-			elem.innerHTML = s1.map((sen, i) =>
-				getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' '))
-				.join(' ') // .join(' ') Is called twice to remove commas coming from nested arrays
 		}
-
 
 		/* 
 		* CREATE MATRIX AND MAP LCS LENGTHS ONTO IT
@@ -219,9 +211,6 @@
 		function lcsLengths(listX, listY) {
 			const lenX = listX.length;
 			const lenY = listY.length;
-
-			// TODO: find out how this array differs from next one
-			// let memo = new Array(lenX+1).fill(new Array(lenY+1).fill(0));
 
 			// Create empty matrix
 			let memo = [lenX + 1];
