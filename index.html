@@ -158,14 +158,14 @@
 			id="left-input" 
 			autofocus
 			placeholder="Write here some text to compare."
-			></textarea>
+			>Test my stuff. here.</textarea>
 
 			<textarea 
 				type="text" 
 				id="right-input" 
 				autofocus
 				placeholder="Write here some text to compare against."
-			></textarea>
+			>Test my stuffs. here nothing changes.</textarea>
 
 		<div id="compare-button" onClick="compare()"> COMPARE</div>
 
@@ -178,6 +178,10 @@
 
 
 	<script>
+		// This hash will be used as a first element in every LCS.
+		// Otherwise changes before LCS will not be reconized.
+		const hash = 'e6783d7aaf8bb4'
+
 		/*
 		* MAIN CONTROLLER
 		*/
@@ -202,6 +206,10 @@
 			 // Check if inputs are sentences
 			if(Array.isArray(s1[0]) && Array.isArray(s2[0])){
 
+				// Add hash at the beginning of each sentence
+				s1.map(sen => sen.unshift(hash))
+				s2.map(sen => sen.unshift(hash))
+
 				// Check if both inputs have same amount of sentences
 				if (s1.length !== s2.length) {
 					elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
@@ -214,6 +222,11 @@
 						.join(' ') 
 				}
 			} else {
+				// Add hash at the beginning of each string
+				s1.unshift(hash)
+				s2.unshift(hash)
+
+				// Get Output
 				elem.innerHTML = getDiff(lcsLengths(s1, s2), s1, s2).join(' ')
 			}
 		}
@@ -285,6 +298,8 @@
 			}
 
 			lcsBackTrack(memo, listX, listY, listX.length, listY.length,)
+
+			finalString = finalString.filter((word) => word !== hash)
 			return finalString.reverse()
 		}
 
