@@ -156,11 +156,19 @@
 <body>
 	<div id="top-bar">Text Diff </div>
 	<div id="content-container">
-		<textarea type="text" id="left-input" autofocus placeholder="Write here some text to compare.">One two three four five six seven eight nine ten. 
-		</textarea>
+		<textarea 
+			type="text" 
+			id="left-input" 
+			autofocus
+			placeholder="Write here some text to compare."
+			>This is a hard coding exercise. Is it? </textarea>
 
-		<textarea type="text" id="right-input" placeholder="Write here some other text to compare against.">One two three added five six eight extra nine ten. 
-		</textarea>
+			<textarea 
+				type="text" 
+				id="right-input" 
+				autofocus
+				placeholder="Write here some text to compare."
+			>This is not a coding exorcist. True! </textarea>
 
 		<div id="compare-button" onClick="compare()"> COMPARE</div>
 
@@ -173,8 +181,10 @@
 
 
 	<script>
-		// MAIN CONTROLLER
-		function compare(){
+		/*
+		* MAIN CONTROLLER
+		*/
+		function compare() {
 			// Out put selectors
 			const elem = document.querySelector('#output');
 			const text = elem.innerHTML;
@@ -191,31 +201,21 @@
 			s1 = s1.map(sen => sen.filter(word => word.length > 0))
 			s2 = s2.map(sen => sen.filter(word => word.length > 0))
 
-			// Give error message if both inputs don'y have same number of sentences
+			// Give error message if both inputs don't have same number of sentences
 			if (s1.length !== s2.length) {
 				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
 			}
 
-			//For testing 
-			s1 = s1[0]
-			s2 = s2[0]
-
-			let output = getDiff(lcsLengths(s1, s2), s1, s2,)
-
-			elem.innerHTML = output.reverse().join(' ');
-
-			//lcsBackTrack(lcsLengths(s1,s2), s1, s2, s1.length, s2.length)
-
-			//let test = LCS(s1[0], s2[0])//s1.map((sen, i) => LCS(sen, s2[i]))
-
-			// Compare inputs and map the result to output
-			//const output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
-
-			// Merge sentences into a single string and pass it to the html
-			// elem.innerHTML = output.join(' ');
+			// Map checked sentences to the outPut
+			elem.innerHTML = s1.map((sen, i) =>
+				getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' '))
+				.join(' ') // .join(' ') Is called twice to remove commas coming from nested arrays
 		}
 
-		// CREATE MATRIX AND MAP LCS LENGTHS ONTO IT
+
+		/* 
+		* CREATE MATRIX AND MAP LCS LENGTHS ONTO IT
+		*/
 		function lcsLengths(listX, listY) {
 			const lenX = listX.length;
 			const lenY = listY.length;
@@ -244,7 +244,9 @@
 			return memo;
 		}
 
-		// MAP STRING DIFFERENCES TO THE FINAL STRING
+		/*
+		* MAP STRING DIFFERENCES TO THE FINAL STRING
+		*/
 		function getDiff(memo, listX, listY) {
 			let finalString = []
 
@@ -281,7 +283,7 @@
 			}
 
 			lcsBackTrack(memo, listX, listY, listX.length, listY.length,)
-			return finalString
+			return finalString.reverse()
 		}
 
 	</script>
