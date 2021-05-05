@@ -158,14 +158,14 @@
 			id="left-input" 
 			autofocus
 			placeholder="Write here some text to compare."
-			>Test my stuff. here.</textarea>
+			></textarea>
 
 			<textarea 
 				type="text" 
 				id="right-input" 
 				autofocus
 				placeholder="Write here some text to compare against."
-			>Test my stuffs. here nothing changes.</textarea>
+			></textarea>
 
 		<div id="compare-button" onClick="compare()"> COMPARE</div>
 
@@ -212,7 +212,7 @@
 
 				// Check if both inputs have same amount of sentences
 				if (s1.length !== s2.length) {
-					elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
+					elem.innerHTML = '<h2 style="color:#ff1145; font-weight: 200;"> Text boxes must have the same number of sentences! </h2>'
 
 				// Map checked sentences to the outPut
 				} else {
