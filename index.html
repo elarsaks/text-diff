@@ -1,188 +1,180 @@
 <!doctype html>
 
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>Text Diff</title>
-  <meta name="Elar Saks" content="SitePoint">
+	<meta charset="utf-8">
+	<title>Text Diff</title>
+	<meta name="Elar Saks" content="SitePoint">
 	<meta name="viewport" content="width=device-width">
-	<link rel="icon" href="./favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
+	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
 
 	<style>
-	body {
-		margin: 0;
-		padding: 0;
-		font-family: Arial, Monospace, sans-serif;
-		background-color: rgb(32, 32, 32);
-		/* This fancy gradient background is not written by me, I found it on Stack OverFlow. */
-  	background-image: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,1)), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(to bottom, rgb(8, 8, 8), rgb(32, 32, 32));
-  	background-size: 100% 100%, 10px 10px, 10px 10px, 10px 5px;
-  	background-position: 0px 0px, 0px 0px, 5px 5px, 0px 0px;
-	}
-
-	#top-bar {
-		display: flex;
-		flex: 1;
-		justify-content: center;
-		height: 7vh;
-		font-size: 4em;
-		color: #FF9900;
-		text-transform: uppercase;
-		font-weight: 600;
-		padding: 0.5em;
-		padding-top: 0.5em;
-		white-space: pre-wrap;
-	}
-
-	#content-container {
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		width: 90%;
-		margin-left: auto;
-		margin-right: auto;
-		color: #228DFF;
-	}
-
-	#compare-button {
-		display: flex;
-		margin-left: auto;
-		margin-right: auto;
-		justify-content: center;
-		text-transform: uppercase;
-		font-size: 2.5em;
-		margin-bottom: 1.5vh;
-		font-weight: 600;
-		padding: 0.1em 0.3em 0.1em 0.3em;
-		border-radius: 0.1em;
-		cursor: pointer;
-		transition: all 0.25s;
-		background-color: rgba(30, 30, 30, 0.3);
-		border: 1px solid #fff;
-		-moz-user-select: none;
-   	-khtml-user-select: none;
-   	-webkit-user-select: none;
-   	-ms-user-select: none;
-   	user-select: none;
-	}
-
-	#compare-button:hover {
-		transform: scale(1.05);
-		background-color: rgba(1, 1, 1, 1);
-	}
-
-	#compare-button:active {
-		transform: scale(1);
-	}
-
-	textarea {
-		width: 47%;
-		height: 30vh;
-		border-radius: 0.2em;
-		font-size: 1.5em;
-		padding: 0.5em;
-		margin-bottom: 1.5vh;
-	}
-
-	#output {
-		width: 100%;
-		font-size: 1.5em;
-		text-align: center;
-		color:  black;
-		background-color: #fff;
-		height: 30vh;
-		padding: 0.5em;
-		overflow-y: scroll;
-		overflow-x: hidden;
-	}
-
-	ins {
-    text-decoration: none;
-    background-color: #51cc09;
-	}
-
-	del {
-		text-decoration: line-through;
-		background-color: #ff1145;;
-		color: rgb(0, 0, 0);
-	}
-
-	h1 {
-		text-align: center;
-		margin: 0.5em;
-	}
-
-	a{
-		text-decoration: none;
-		color: #fff;
-		font-size: 0.9em;
-		font-weight: lighter;
-	}
-
-	@media /* only screen and (orientation: portrait) and */(max-width: 767px) {
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, Monospace, sans-serif;
+			background-color: rgb(32, 32, 32);
+			/* This fancy gradient background is not written by me, I found it on Stack OverFlow. */
+			background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 1)), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(to bottom, rgb(8, 8, 8), rgb(32, 32, 32));
+			background-size: 100% 100%, 10px 10px, 10px 10px, 10px 5px;
+			background-position: 0px 0px, 0px 0px, 5px 5px, 0px 0px;
+		}
 
 		#top-bar {
-			font-size: 2em;
+			display: flex;
+			flex: 1;
+			justify-content: center;
+			height: 7vh;
+			font-size: 4em;
+			color: #FF9900;
+			text-transform: uppercase;
+			font-weight: 600;
+			padding: 0.5em;
+			padding-top: 0.5em;
+			white-space: pre-wrap;
 		}
 
 		#content-container {
-			width: 95%;
-		}
-
-		textarea {
-			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
+			color: #228DFF;
 		}
 
 		#compare-button {
+			display: flex;
+			margin-left: auto;
+			margin-right: auto;
+			justify-content: center;
+			text-transform: uppercase;
+			font-size: 2.5em;
+			margin-bottom: 1.5vh;
+			font-weight: 600;
+			padding: 0.1em 0.3em 0.1em 0.3em;
+			border-radius: 0.1em;
+			cursor: pointer;
+			transition: all 0.25s;
+			background-color: rgba(30, 30, 30, 0.3);
+			border: 1px solid #fff;
+			-moz-user-select: none;
+			-khtml-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		#compare-button:hover {
+			transform: scale(1.05);
+			background-color: rgba(1, 1, 1, 1);
+		}
+
+		#compare-button:active {
+			transform: scale(1);
+		}
+
+		textarea {
+			width: 47%;
+			height: 30vh;
+			border-radius: 0.2em;
 			font-size: 1.5em;
-			margin-top: 1.vh;
+			padding: 0.5em;
 			margin-bottom: 1.5vh;
 		}
 
-		a {
-			font-size: 0.7em;
+		#output {
+			width: 100%;
+			font-size: 1.5em;
+			text-align: center;
+			color: black;
+			background-color: #fff;
+			height: 30vh;
+			padding: 0.5em;
+			overflow-y: scroll;
+			overflow-x: hidden;
 		}
 
-	} 
+		ins {
+			text-decoration: none;
+			background-color: #51cc09;
+		}
 
+		del {
+			text-decoration: line-through;
+			background-color: #ff1145;
+			;
+			color: rgb(0, 0, 0);
+		}
+
+		h1 {
+			text-align: center;
+			margin: 0.5em;
+		}
+
+		a {
+			text-decoration: none;
+			color: #fff;
+			font-size: 0.9em;
+			font-weight: lighter;
+		}
+
+		@media
+
+		/* only screen and (orientation: portrait) and */
+		(max-width: 767px) {
+
+			#top-bar {
+				font-size: 2em;
+			}
+
+			#content-container {
+				width: 95%;
+			}
+
+			textarea {
+				width: 100%;
+			}
+
+			#compare-button {
+				font-size: 1.5em;
+				margin-top: 1.vh;
+				margin-bottom: 1.5vh;
+			}
+
+			a {
+				font-size: 0.7em;
+			}
+
+		}
 	</style>
 </head>
 
 <body>
 	<div id="top-bar">Text Diff </div>
 	<div id="content-container">
-		<textarea 
-			type="text" 
-			id="left-input" 
-			autofocus
-			placeholder="Write here some text to compare."
-		>This is a hard coding exercise. Is it? 
+		<textarea type="text" id="left-input" autofocus placeholder="Write here some text to compare.">One two three four five six seven eight nine ten. 
 		</textarea>
 
-		<textarea 
-			type="text" 
-			id="right-input" 
-			placeholder="Write here some other text to compare against."
-		>This is not a coding exorcist. True! 
+		<textarea type="text" id="right-input" placeholder="Write here some other text to compare against.">One two three added five six eight extra nine ten. 
 		</textarea>
 
-		<div 
-			id="compare-button" 
-			onClick="compare()"
-		> COMPARE</div>
+		<div id="compare-button" onClick="compare()"> COMPARE</div>
 
 		<div id="output"></div>
 	</div>
 
 	<h1>
-		<a href="https://www.linkedin.com/in/elarsaks/" target="_blank" >ELAR SAKS</a>
-	</h1> 
-	
+		<a href="https://www.linkedin.com/in/elarsaks/" target="_blank">ELAR SAKS</a>
+	</h1>
+
 
 	<script>
-		// THIS IS THE MAIN CONTROLLER
-		const compare = () => {
+		// MAIN CONTROLLER
+		function compare(){
 			// Out put selectors
 			const elem = document.querySelector('#output');
 			const text = elem.innerHTML;
@@ -192,21 +184,29 @@
 			let s2 = document.getElementById("right-input").value;
 
 			// Break input strings into arrays of sentences, that are arrays of words
-			s1 = s1.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
-			s2 = s2.match( /[^\.!\?]+[\.!\?]+/g ).map(sen => sen.split(' '))
+			s1 = s1.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
+			s2 = s2.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
 
 			// Remove empty strings
 			s1 = s1.map(sen => sen.filter(word => word.length > 0))
 			s2 = s2.map(sen => sen.filter(word => word.length > 0))
 
 			// Give error message if both inputs don'y have same number of sentences
-			if(s1.length !== s2.length){
+			if (s1.length !== s2.length) {
 				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
 			}
 
-			let test = s1.map((sen, i) => LCS(sen, s2[i]))
+			//For testing 
+			s1 = s1[0]
+			s2 = s2[0]
 
-			//console.log(test)
+			let output = getDiff(lcsLengths(s1, s2), s1, s2,)
+
+			elem.innerHTML = output.reverse().join(' ');
+
+			//lcsBackTrack(lcsLengths(s1,s2), s1, s2, s1.length, s2.length)
+
+			//let test = LCS(s1[0], s2[0])//s1.map((sen, i) => LCS(sen, s2[i]))
 
 			// Compare inputs and map the result to output
 			//const output = s1.map((sen, i) => generateOutPut(sen, s2[i], LCS(sen, s2[i])))	
@@ -215,176 +215,76 @@
 			// elem.innerHTML = output.join(' ');
 		}
 
-		/* Takes 2 original inputs and merges them together with LCS
-		const generateOutPut = (s1, s2, lcs) => {
-			const outPut = lcs
-			let s1DeletedWordIndexes = []
-			let s2AddedWordIndexes = []
-
-			// Add words that have been deleted from first text
-			s1.forEach((word, i) => !lcs.includes(word)? s1DeletedWordIndexes.push(i) : null );
-			s1DeletedWordIndexes.forEach(i => outPut.splice(i, 0, `<del>${s1[i]}</del>`))
-
-			// Add words that have been added in a second text
-			s2.forEach((word, i) => !lcs.includes(word) ? s2AddedWordIndexes.push(i) : null );
-			s2AddedWordIndexes.forEach(i => outPut.splice(i, 0, `<ins>${s2[i]}</ins>`))
-
-			return lcs.join(' ') + '<br/>'
-		} */
-
-		// UNDER DEVELOPMENT
-		const LCS = (s1, s2) => lcsBackTrack(lcsLengths(s1,s2), s1, s2, s1.length, s2.length)
-			
+		// CREATE MATRIX AND MAP LCS LENGTHS ONTO IT
 		function lcsLengths(listX, listY) {
-        var lenX = listX.length;
-        var lenY = listY.length;
+			const lenX = listX.length;
+			const lenY = listY.length;
 
-			//	console.log(listX)
-        
-        // Create empty matrix
-        var memo = [lenX+1];
-        for (var i = 0; i < lenX+1; i++) {
-                memo[i] = [lenY+1];
-                for (var j = 0; j < lenY+1; j++) {
-                        memo[i][j] = 0;
-                }
-        }
+			// TODO: find out how this array differs from next one
+			// let memo = new Array(lenX+1).fill(new Array(lenY+1).fill(0));
 
-        // Memorize the lcs length at each position in the matrix
-        for (var i = 1; i < lenX+1; i++) {
-                for (var j = 1; j < lenY+1; j++) {
-                        if (listX[i-1] == listY[j-1]) {
-                                memo[i][j] = memo[i-1][j-1] + 1;
-                        }
-                        else {
-                                memo[i][j] = Math.max(
-                                        memo[i][j-1],
-                                        memo[i-1][j]);
-                        }
-                }
-        }
-				
-        return memo;
-}
-
-let finalString = []
-
-// Backtrack values from matrix
-function lcsBackTrack(memo, listX, listY, posX, posY) {
-	console.log(finalString)
-        // base case 
-    if (posX == 0 || posY == 0) return "";
-        
-    // match => go up and left
-    if (listX [posX-1] == listY[posY-1]) {
-
-			finalString.push(listX [posX-1])
-		
-      return lcsBackTrack(memo, listX, listY, posX-1, posY-1) + listX[posX-1];
-    } else {
-			
-
-			// Fnd out withc if statement follows witch array
-			if (memo[posX][posY-1] > memo[posX-1][posY]) { 
-
-				console.log(listY[posY-1], posY-1)
-				// go up
-				return lcsBackTrack(memo, listX, listY, posX, posY-1); // Y-aaxis
-			}       
-			else {
-
-			finalString.splice(posX-1, 0, /* `<del>${ */ listX[posX-1] /* }</del>`*/)
-				// go left
-				return lcsBackTrack(memo, listX, listY, posX-1, posY);
+			// Create empty matrix
+			let memo = [lenX + 1];
+			for (var i = 0; i < lenX + 1; i++) {
+				memo[i] = [lenY + 1];
+				for (var j = 0; j < lenY + 1; j++) {
+					memo[i][j] = 0;
+				}
 			}
-			
-  }
 
-	
-}
+			// Save LCS length at each position into matrix
+			for (var i = 1; i < lenX + 1; i++) {
+				for (var j = 1; j < lenY + 1; j++) {
+					listX[i - 1] == listY[j - 1]
+						? memo[i][j] = memo[i - 1][j - 1] + 1
+						: memo[i][j] = Math.max(memo[i][j - 1], memo[i - 1][j])
+				}
+			}
 
+			return memo;
+		}
 
+		// MAP STRING DIFFERENCES TO THE FINAL STRING
+		function getDiff(memo, listX, listY) {
+			let finalString = []
 
-/*
+			// BACKTRACK VALUES FROM MATRIX
+			function lcsBackTrack(memo, listX, listY, posX, posY) {
 
-/**
- * Find a longest common subsenquence.
- * Note: It might not be the only possible longest common subsequence!
- *
-function lcs(listX, listY) {
-        return lcsBackTrack(
-                lcsLengths(listX, listY),
-                listX, listY, 
-                listX.length, listY.length);
-}
+				// Stop recursive loop when the position === 0 (Base case)
+				if (posX == 0 || posY == 0) return "";
 
-/**
- * Iteratively memoize a matrix of longest common subsequence lengths.
- *
-function lcsLengths(listX, listY) {
-        var lenX = listX.length;
-        var lenY = listY.length;
-        
-        // Initialize a lenX+1 x lenY+1 matrix
-        var memo = [lenX+1];
-        for (var i = 0; i < lenX+1; i++) {
-                memo[i] = [lenY+1];
-                for (var j = 0; j < lenY+1; j++) {
-                        memo[i][j] = 0;
-                }
-        }
-                
-        // Memoize the lcs length at each position in the matrix
-        for (var i = 1; i < lenX+1; i++) {
-                for (var j = 1; j < lenY+1; j++) {
-                        if (listX[i-1] == listY[j-1]) {
-                                memo[i][j] = memo[i-1][j-1] + 1;
-                        }
-                        else {
-                                memo[i][j] = Math.max(
-                                        memo[i][j-1],
-                                        memo[i-1][j]);
-                        }
-                }
-        }
-        console.log(memo)
-        return memo;
-}
+				// Has match?
+				if (listX[posX - 1] == listY[posY - 1]) {
 
-/**
- * Recursively read back a memoized matrix of longest common subsequence lengths
- * to find a longest common subsequence.
- *
-function lcsBackTrack(memo, listX, listY, posX, posY) {
-        
-        // base case 
-        if (posX == 0 || posY == 0) {
-                return "";
-        }
-        
-        // matcth => go up and left
-        else if (listX [posX-1] == listY[posY-1]) {
-                return lcsBackTrack(memo, listX, listY, posX-1, posY-1) + listX[posX-1];
-        }
-        
-        else {
-                // go up
-                if (memo[posX][posY-1] > memo[posX-1][posY]) { 
-                        return lcsBackTrack(memo, listX, listY, posX, posY-1);
-                }
-                
-                // go left
-                else {
-                        return lcsBackTrack(memo, listX, listY, posX-1, posY);
-                }
-        }
-}
+					// Add the word into final string && Move up and left
+					finalString.push(listX[posX - 1])
+					return lcsBackTrack(memo, listX, listY, posX - 1, posY - 1) + listX[posX - 1];
 
+				} else {
 
-var lcsArray = lcs(["ab","cd","ef"], ["aa", "ab", "ef", "bb"]);
-var lcsString = lcs("antler", "lantern");
+					// Check if UP > LEFT (X > Y)
+					if (memo[posX][posY - 1] > memo[posX - 1][posY]) {
 
-console.log(lcsString) */
-		</script>
+						// Add added item to final string && Move up
+						finalString.push(`<ins>${listY[posY - 1]}</ins>`)
+						return lcsBackTrack(memo, listX, listY, posX, posY - 1); // Y-axis
+
+						// LEFT > UP (Y > X)
+					} else {
+
+						// Add deleted item to final string && Move left
+						finalString.push(`<del>${listX[posX - 1]}</del>`)
+						return lcsBackTrack(memo, listX, listY, posX - 1, posY);
+					}
+				}
+			}
+
+			lcsBackTrack(memo, listX, listY, listX.length, listY.length,)
+			return finalString
+		}
+
+	</script>
 </body>
+
 </html>
