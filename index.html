@@ -191,17 +191,30 @@
 			let s2 = document.getElementById("right-input").value;
 
 			// If input has (. ! ?) divide it into sentences and then words, else divide it straight into words
-			s1 = s1.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' ')) 
-			s2 = s2.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' ')) 
+			s1 = s1.match(/[^\.!\?]+[\.!\?]+/g) 
+				? s1.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
+				: s1.split(' ')
 
-			// Output error message if both inputs don't have same number of sentences
-			if (s1.length !== s2.length) {
-				elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
-			} else {
+			s2 = s2.match(/[^\.!\?]+[\.!\?]+/g) 
+				? s2.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
+				: s2.split(' ')
+
+			 // Check if inputs are sentences
+			if(Array.isArray(s1[0]) && Array.isArray(s2[0])){
+
+				// Check if both inputs have same amount of sentences
+				if (s1.length !== s2.length) {
+					elem.innerHTML = '<h2 style="color:#ff1145;"> Text boxes must have the same number of sentences! </h2>'
+
 				// Map checked sentences to the outPut
-				elem.innerHTML = s1.map((sen, i) =>
-					getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' '))
-					.join(' ') // .join(' ') Is called twice to remove commas coming from nested arrays 
+				} else {
+					// Note: .join(' ') Is called twice to remove commas coming from nested arrays 
+					elem.innerHTML = s1.map((sen, i) =>
+						getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' '))
+						.join(' ') 
+				}
+			} else {
+				elem.innerHTML = getDiff(lcsLengths(s1, s2), s1, s2).join(' ')
 			}
 		}
 
