@@ -13,3 +13,6 @@ It is a simple [diff](https://en.wikipedia.org/wiki/Diff) tool that compares and
 * Compares input text's sentence to sentence and therefore only accepts the same number of sentences in both inputs.
 * Has a WORD, not a CHARACTER level accuracy.
 * Coming from the last point, the sentence ending symbol (. ! ?) gets counted as a part of the last word.
+
+## Screenshot
+<img src="https://s3.eu-north-1.amazonaws.com/elar-saks.info/text-diff.png" />
