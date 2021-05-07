@@ -6,12 +6,10 @@ It is a simple [diff](https://en.wikipedia.org/wiki/Diff) tool that compares and
 * Locally: Download index.html file and open it with any browser
 
 ## Properties
-* Built with Html, CSS and JavaScript
-* Uses [Longest Common Subsequence](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem) algoritm to find and keep track of differences between two strings.
+* Built with Html, CSS, and JavaScript
+* Uses [Longest Common Subsequence](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem) algorithm to find and keep track of differences between two strings.
 
 ## Limitations
-* Has a word level accuracy.
-* Compares input text's sentence to sentence and therefore only accepts same number of sentences in bot inputs.
-
-
-
+* Compares input text's sentence to sentence and therefore only accepts the same number of sentences in both inputs.
+* Has a WORD, not a CHARACTER level accuracy.
+* Coming from the last point, the sentence ending symbol (. ! ?) gets counted as a part of the last word.
