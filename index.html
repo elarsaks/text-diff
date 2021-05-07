@@ -153,11 +153,11 @@
 <body>
 	<div id="top-bar">Text Diff </div>
 	<div id="content-container">
-		<textarea
+		<textarea 
 			type="text" 
 			id="left-input" 
 			autofocus
-			placeholder="Write here text to compare."
+			placeholder="Write here some text to compare."
 			></textarea>
 
 			<textarea 
@@ -304,22 +304,20 @@
 		}
 
 		// Test inputs
-		const testInput1 = `Take a few seconds to watch a couple of sample inputs. \
-			First sentence has a word to it. \
-			Followed by sentence with word removed from it. \
-			Third sentence has a word and removed from it. \
-			sentence is about changing the first word of the sentence. \
-			Completely different string totally changed to show indexing of words.\
-			\nYou can now change the text in upper input boxes to test the application!`
+		const testInput1 = `Take a minute to watch a couple of sample inputs.
+First sentence has a word to it.
+Followed by sentence with word removed from it.
+Third sentence has a word and removed from it.
+sentence is about changing the first word of the sentence.
+Completely different string totally changed to show indexing of words.`
 
 
-		const testInput2 = `Take a few seconds to watch a couple of sample inputs. \
-			First sentence has a word added to it. \
-			Followed by sentence with word from it. \
-			Third sentence has a word added and from it. \
-			Fourth is about changing the first word of the sentence. \
-			And Finally we have a string to show the indexing of words.\
-			\nYou can now change the text in upper input boxes to test the application!`
+		const testInput2 = `Take a minute to watch a couple of sample inputs.
+First sentence has a word added to it.
+Followed by sentence with word from it.
+Third sentence has a word added and from it.
+Fourth is about changing the first word of the sentence.
+And Finally we have a string to show the indexing of words.`
 
 		// Run Test Example
 		window.addEventListener('load', function(event) {
@@ -340,8 +338,15 @@
 					i++
 					compare(testInput1, testInput2)
 
-				if (i < 500){
-					setTimeout(run, 30);
+				if (i < Math.max(testInput1.length, testInput2.length)){
+					setTimeout(run, 100);
+				} else {
+					setTimeout(() => {
+						input1.innerHTML = null
+						input2.innerHTML = null
+						setOutPut(`<h2 style="color:green; font-weight: 200; text-align: center;">
+							You can now enter your own text test the application! </h2>`);
+					}, 3000);
 				}
 			}, 100);		
 			
