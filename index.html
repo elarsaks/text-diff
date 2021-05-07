@@ -84,12 +84,13 @@
 			font-size: 1.5em;
 			padding: 0.5em;
 			margin-bottom: 1.5vh;
+			white-space: normal;
 		}
 
 		#output {
 			width: 100%;
 			font-size: 1.5em;
-			text-align: center;
+			text-align: left;
 			color: black;
 			background-color: #fff;
 			height: 30vh;
@@ -106,7 +107,6 @@
 		del {
 			text-decoration: line-through;
 			background-color: #ff1145;
-			;
 			color: rgb(0, 0, 0);
 		}
 
@@ -158,14 +158,14 @@
 			id="left-input" 
 			autofocus
 			placeholder="Write here some text to compare."
-			></textarea>
+			>Test 1. Just in case!</textarea>
 
 			<textarea 
 				type="text" 
 				id="right-input" 
 				autofocus
 				placeholder="Write here some text to compare against."
-			></textarea>
+			>Test 2. Just a case!</textarea>
 
 		<div id="compare-button" onClick="compare()"> COMPARE</div>
 
@@ -181,54 +181,53 @@
 		// This hash will be used as a first element in every LCS.
 		// Otherwise changes before LCS will not be reconized.
 		const hash = 'e6783d7aaf8bb4'
+		
+		// output selector
+		function setOutPut(text){
+			const output = document.querySelector('#output');
+			output.innerHTML = text
+		}
+
+		// If input has (. ! ?) divide it into sentences and then words, else divide it straight into words
+		function divideStringIntoSentences(string){				
+			return string.match(/[^\.!\?]+[\.!\?]+/g) 
+				? string.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
+				: string.split(' ')
+		}
+
+		// Add hash at the beginning of each sentence, check for sentence amount & output response
+		function compareMultipleSentences(s1, s2){
+			s1.map(sen => sen.unshift(hash))
+			s2.map(sen => sen.unshift(hash))
+
+			s1.length !== s2.length 
+				? setOutPut(`<h2 style="color:#ff1145; font-weight: 200; text-align: center;">
+					Text boxes must have the same number of sentences! </h2>`)
+					
+				: setOutPut(s1.map((sen, i) => 
+					getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' ')).join(' '))
+		}
+
+		// Add hash at the beginning of each string & output edited words
+		function compareSingleSentence(s1, s2){	
+			s1.unshift(hash)
+			s2.unshift(hash)
+			setOutPut(getDiff(lcsLengths(s1, s2), s1, s2).join(' '))
+		}
 
 		/*
 		* MAIN CONTROLLER
 		*/
 		function compare() {
-			// Out put selectors
-			const elem = document.querySelector('#output');
-			const text = elem.innerHTML;
+			let s1 =  document.getElementById("left-input").value;
+			let s2 =  document.getElementById("right-input").value;
 
-			// Input selectors
-			let s1 = document.getElementById("left-input").value;
-			let s2 = document.getElementById("right-input").value;
+			s1 = divideStringIntoSentences(s1)
+			s2 = divideStringIntoSentences(s2)
 
-			// If input has (. ! ?) divide it into sentences and then words, else divide it straight into words
-			s1 = s1.match(/[^\.!\?]+[\.!\?]+/g) 
-				? s1.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
-				: s1.split(' ')
-
-			s2 = s2.match(/[^\.!\?]+[\.!\?]+/g) 
-				? s2.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
-				: s2.split(' ')
-
-			 // Check if inputs are sentences
-			if(Array.isArray(s1[0]) && Array.isArray(s2[0])){
-
-				// Add hash at the beginning of each sentence
-				s1.map(sen => sen.unshift(hash))
-				s2.map(sen => sen.unshift(hash))
-
-				// Check if both inputs have same amount of sentences
-				if (s1.length !== s2.length) {
-					elem.innerHTML = '<h2 style="color:#ff1145; font-weight: 200;"> Text boxes must have the same number of sentences! </h2>'
-
-				// Map checked sentences to the outPut
-				} else {
-					// Note: .join(' ') Is called twice to remove commas coming from nested arrays 
-					elem.innerHTML = s1.map((sen, i) =>
-						getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' '))
-						.join(' ') 
-				}
-			} else {
-				// Add hash at the beginning of each string
-				s1.unshift(hash)
-				s2.unshift(hash)
-
-				// Get Output
-				elem.innerHTML = getDiff(lcsLengths(s1, s2), s1, s2).join(' ')
-			}
+			Array.isArray(s1[0]) && Array.isArray(s2[0])
+				? compareMultipleSentences(s1, s2)
+				: compareSingleSentence(s1, s2)
 		}
 
 		/* 
@@ -302,6 +301,31 @@
 			finalString = finalString.filter((word) => word !== hash)
 			return finalString.reverse()
 		}
+
+		// Test inputs
+		const testInput1 = `First sentence has a word to it. \
+			Followed by sentence with word removed from it. \
+			Third sentence has a word and removed from it. \
+			sentence is about changing the first word of the sentence (before LCS starts counting). \
+			And that is removed.`
+
+		const testInput2 = `First sentence has a word added to it. \
+			Followed by sentence with word from it. \
+			Third sentence has a word added and from it. \
+			Fourth is about changing the first word of the sentence (before LCS starts counting). \
+			This sentence gets added.`
+
+		// Run Test Example
+		window.addEventListener('load', function(event) {
+			let input1 =   document.getElementById("left-input");
+			let input2 = document.getElementById("right-input");
+
+			input1.innerHTML = testInput1
+			input2.innerHTML = testInput2
+
+
+			compare(testInput1, testInput2)
+		}); //
 
 	</script>
 </body>
