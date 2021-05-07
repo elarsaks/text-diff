@@ -304,19 +304,19 @@
 		}
 
 		// Test inputs
-		const testInput1 = `Take a minute to watch a couple of sample inputs.
+		const testInput1 = `Take a minute to watch a couple of example inputs.
 First sentence has a word to it.
 Followed by sentence with word removed from it.
 Third sentence has a word and removed from it.
-sentence is about changing the first word of the sentence.
+sentence is about changing the first word of the sentence (because it might stay out of LCS).
 Completely different string totally changed to show indexing of words.`
 
 
-		const testInput2 = `Take a minute to watch a couple of sample inputs.
+		const testInput2 = `Take a minute to watch a couple of example inputs.
 First sentence has a word added to it.
 Followed by sentence with word from it.
 Third sentence has a word added and from it.
-Fourth is about changing the first word of the sentence.
+Fourth is about changing the first word of the sentence (because it might stay out of LCS).
 And Finally we have a string to show the indexing of words.`
 
 		// Run Test Example
@@ -339,14 +339,14 @@ And Finally we have a string to show the indexing of words.`
 					compare(testInput1, testInput2)
 
 				if (i < Math.max(testInput1.length, testInput2.length)){
-					setTimeout(run, 100);
+					setTimeout(run, 150);
 				} else {
 					setTimeout(() => {
 						input1.innerHTML = null
 						input2.innerHTML = null
 						setOutPut(`<h2 style="color:green; font-weight: 200; text-align: center;">
-							You can now enter your own text test the application! </h2>`);
-					}, 3000);
+							You can now enter your own text to test the application! </h2>`);
+					}, 7300);
 				}
 			}, 100);		
 			
