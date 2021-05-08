@@ -271,7 +271,9 @@
 				if (posX == 0 || posY == 0) return "";
 
 				// Has match?
-				if (listX[posX - 1] == listY[posY - 1]) {
+				if (listX[posX - 1] == listY[posY - 1] 
+				// AND LEFT > ITSELF (is original LCS)
+				&& memo[posX][posY - 1] < memo[posX][posY] ) {
 
 					// Add the word into final string && Move up and left
 					finalString.push(listX[posX - 1])
@@ -279,14 +281,13 @@
 
 				} else {
 
-					// Check if UP > LEFT (X > Y)
+					// If LEFT > UP
 					if (memo[posX][posY - 1] > memo[posX - 1][posY]) {
 
 						// Add added item to final string && Move up
 						finalString.push(`<ins>${listY[posY - 1]}</ins>`)
 						return lcsBackTrack(memo, listX, listY, posX, posY - 1); // Y-axis
 
-						// LEFT > UP (Y > X)
 					} else {
 
 						// Add deleted item to final string && Move left
@@ -309,7 +310,9 @@ First sentence has a word to it.
 Followed by sentence with word removed from it.
 Third sentence has a word and removed from it.
 sentence is about changing the first word of the sentence (because it might stay out of LCS).
-Completely different string totally changed to show indexing of words.`
+Completely different string totally changed to show indexing of words.
+Finally we have the the symbols in LCS.
+`
 
 
 		const testInput2 = `Take a minute to watch a couple of example inputs.
@@ -317,7 +320,9 @@ First sentence has a word added to it.
 Followed by sentence with word from it.
 Third sentence has a word added and from it.
 Fourth is about changing the first word of the sentence (because it might stay out of LCS).
-And Finally we have a string to show the indexing of words.`
+And now we have a string to show the indexing of words.
+Finally we have the the consecutive repeating repeating the symbols in LCS.
+`
 
 		// Run Test Example
 		window.addEventListener('load', function(event) {
@@ -335,8 +340,9 @@ And Finally we have a string to show the indexing of words.`
 				if(i < testInput2.length){
 					input2.innerHTML += testInput2[i]
 				}
-					i++
-					compare(testInput1, testInput2)
+				
+				i++
+				compare(testInput1, testInput2)
 
 				if (i < Math.max(testInput1.length, testInput2.length)){
 					setTimeout(run, 150);
@@ -349,9 +355,7 @@ And Finally we have a string to show the indexing of words.`
 					}, 7300);
 				}
 			}, 100);		
-			
-		}); //
-
+		});
 	</script>
 </body>
 
