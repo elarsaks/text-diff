@@ -179,7 +179,6 @@
 
 	<script>
 		// This hash will be used as a first element in every LCS.
-		// Otherwise changes before LCS will not be reconized.
 		const hash = 'e6783d7aaf8bb4'
 		
 		// output selector
@@ -196,43 +195,39 @@
 		}
 
 		// Add hash at the beginning of each sentence, check for sentence amount & output response
-		function compareMultipleSentences(s1, s2){
-			s1.map(sen => sen.unshift(hash))
-			s2.map(sen => sen.unshift(hash))
+		function compareMultipleSentences(listX, listY){
+			listX.map(sen => sen.unshift(hash))
+			listY.map(sen => sen.unshift(hash))
 
-			s1.length !== s2.length 
+			listX.length !== listY.length 
 				? setOutPut(`<h2 style="color:#ff1145; font-weight: 200; text-align: center;">
 					Text boxes must have the same number of sentences! </h2>`)
 					
-				: setOutPut(s1.map((sen, i) => 
-					getDiff(lcsLengths(sen, s2[i]), sen, s2[i]).join(' ')).join(' '))
+				: setOutPut(listX.map((sen, i) => 
+					getDiff(lcsLengths(sen, listY[i]), sen, listY[i]).join(' ')).join(' '))
 		}
 
 		// Add hash at the beginning of each string & output edited words
-		function compareSingleSentence(s1, s2){	
-			s1.unshift(hash)
-			s2.unshift(hash)
-			setOutPut(getDiff(lcsLengths(s1, s2), s1, s2).join(' '))
+		function compareSingleSentence(listX, listY){	
+			listX.unshift(hash)
+			listY.unshift(hash)
+			setOutPut(getDiff(lcsLengths(listX, listY), listX, listY).join(' '))
 		}
 
-		/*
-		* MAIN CONTROLLER
-		*/
+		/* MAIN CONTROLLER */
 		function compare() {
-			let s1 =  document.getElementById("left-input").value;
-			let s2 =  document.getElementById("right-input").value;
+			let listX =  document.getElementById("left-input").value;
+			let listY =  document.getElementById("right-input").value;
 
-			s1 = divideStringIntoSentences(s1)
-			s2 = divideStringIntoSentences(s2)
+			listX = divideStringIntoSentences(listX)
+			listY = divideStringIntoSentences(listY)
 			
-			Array.isArray(s1[0]) && Array.isArray(s2[0])
-				? compareMultipleSentences(s1, s2)
-				: compareSingleSentence(s1, s2)
+			Array.isArray(listX[0]) && Array.isArray(listY[0])
+				? compareMultipleSentences(listX, listY)
+				: compareSingleSentence(listX, listY)
 		}
 
-		/* 
-		* CREATE MATRIX AND MAP LCS LENGTHS ONTO IT
-		*/
+		/* CREATE MATRIX AND MAP LCS LENGTHS ONTO IT */
 		function lcsLengths(listX, listY) {
 			const lenX = listX.length;
 			const lenY = listY.length;
@@ -258,9 +253,7 @@
 			return memo;
 		}
 
-		/*
-		* MAP STRING DIFFERENCES TO THE FINAL STRING
-		*/
+		/* MAP STRING DIFFERENCES TO THE FINAL STRING */
 		function getDiff(memo, listX, listY) {
 			let finalString = []
 
@@ -313,7 +306,6 @@ sentence is about changing the first word of the sentence (because it might stay
 Completely different string totally changed to show indexing of words.
 Finally we have the the symbols in LCS.
 `
-
 
 		const testInput2 = `Take a minute to watch a couple of example inputs.
 First sentence has a word added to it.
