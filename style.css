@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Monospace, sans-serif;
+  background-color: rgb(32, 32, 32);
+  /* This fancy gradient background is not written by me, I found it on Stack OverFlow. */
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 0) 80%,
+      rgba(0, 0, 0, 1)
+    ),
+    linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    ),
+    linear-gradient(
+      45deg,
+      black 25%,
+      transparent 25%,
+      transparent 75%,
+      black 75%,
+      black
+    ),
+    linear-gradient(to bottom, rgb(8, 8, 8), rgb(32, 32, 32));
+  background-size: 100% 100%, 10px 10px, 10px 10px, 10px 5px;
+  background-position: 0px 0px, 0px 0px, 5px 5px, 0px 0px;
+}
+
+#top-bar {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  height: 7vh;
+  font-size: 4em;
+  color: #ff9900;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.5em;
+  padding-top: 0.5em;
+  white-space: pre-wrap;
+}
+
+#content-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #228dff;
+}
+
+#compare-button {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: 2.5em;
+  margin-bottom: 1.5vh;
+  font-weight: 600;
+  padding: 0.1em 0.3em 0.1em 0.3em;
+  border-radius: 0.1em;
+  cursor: pointer;
+  transition: all 0.25s;
+  background-color: rgba(30, 30, 30, 0.3);
+  border: 1px solid #fff;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#compare-button:hover {
+  transform: scale(1.05);
+  background-color: rgba(1, 1, 1, 1);
+}
+
+#compare-button:active {
+  transform: scale(1);
+}
+
+textarea {
+  width: 47%;
+  height: 30vh;
+  border-radius: 0.2em;
+  font-size: 1.5em;
+  padding: 0.5em;
+  margin-bottom: 1.5vh;
+  white-space: normal;
+}
+
+#output {
+  width: 100%;
+  font-size: 1.5em;
+  text-align: left;
+  color: black;
+  background-color: #fff;
+  height: 30vh;
+  padding: 0.5em;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+ins {
+  text-decoration: none;
+  background-color: #51cc09;
+}
+
+del {
+  text-decoration: line-through;
+  background-color: #ff1145;
+  color: rgb(0, 0, 0);
+}
+
+h1 {
+  text-align: center;
+  margin: 0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9em;
+  font-weight: lighter;
+}
+
+@media (max-width: 769px) {
+  #top-bar {
+    font-size: 2em;
+  }
+
+  #content-container {
+    width: 95%;
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  #compare-button {
+    font-size: 1.5em;
+    margin-top: 1vh;
+    margin-bottom: 1.5vh;
+  }
+
+  a {
+    font-size: 0.7em;
+  }
+}

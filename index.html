@@ -9,163 +9,16 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			font-family: Arial, Monospace, sans-serif;
-			background-color: rgb(32, 32, 32);
-			/* This fancy gradient background is not written by me, I found it on Stack OverFlow. */
-			background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 1)), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), linear-gradient(to bottom, rgb(8, 8, 8), rgb(32, 32, 32));
-			background-size: 100% 100%, 10px 10px, 10px 10px, 10px 5px;
-			background-position: 0px 0px, 0px 0px, 5px 5px, 0px 0px;
-		}
-
-		#top-bar {
-			display: flex;
-			flex: 1;
-			justify-content: center;
-			height: 7vh;
-			font-size: 4em;
-			color: #FF9900;
-			text-transform: uppercase;
-			font-weight: 600;
-			padding: 0.5em;
-			padding-top: 0.5em;
-			white-space: pre-wrap;
-		}
-
-		#content-container {
-			display: flex;
-			justify-content: space-between;
-			flex-wrap: wrap;
-			width: 90%;
-			margin-left: auto;
-			margin-right: auto;
-			color: #228DFF;
-		}
-
-		#compare-button {
-			display: flex;
-			margin-left: auto;
-			margin-right: auto;
-			justify-content: center;
-			text-transform: uppercase;
-			font-size: 2.5em;
-			margin-bottom: 1.5vh;
-			font-weight: 600;
-			padding: 0.1em 0.3em 0.1em 0.3em;
-			border-radius: 0.1em;
-			cursor: pointer;
-			transition: all 0.25s;
-			background-color: rgba(30, 30, 30, 0.3);
-			border: 1px solid #fff;
-			-moz-user-select: none;
-			-khtml-user-select: none;
-			-webkit-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-		}
-
-		#compare-button:hover {
-			transform: scale(1.05);
-			background-color: rgba(1, 1, 1, 1);
-		}
-
-		#compare-button:active {
-			transform: scale(1);
-		}
-
-		textarea {
-			width: 47%;
-			height: 30vh;
-			border-radius: 0.2em;
-			font-size: 1.5em;
-			padding: 0.5em;
-			margin-bottom: 1.5vh;
-			white-space: normal;
-		}
-
-		#output {
-			width: 100%;
-			font-size: 1.5em;
-			text-align: left;
-			color: black;
-			background-color: #fff;
-			height: 30vh;
-			padding: 0.5em;
-			overflow-y: scroll;
-			overflow-x: hidden;
-		}
-
-		ins {
-			text-decoration: none;
-			background-color: #51cc09;
-		}
-
-		del {
-			text-decoration: line-through;
-			background-color: #ff1145;
-			color: rgb(0, 0, 0);
-		}
-
-		h1 {
-			text-align: center;
-			margin: 0.5em;
-		}
-
-		a {
-			text-decoration: none;
-			color: #fff;
-			font-size: 0.9em;
-			font-weight: lighter;
-		}
-
-		@media (max-width: 769px) {
-
-			#top-bar {
-				font-size: 2em;
-			}
-
-			#content-container {
-				width: 95%;
-			}
-
-			textarea {
-				width: 100%;
-			}
-
-			#compare-button {
-				font-size: 1.5em;
-				margin-top: 1.vh;
-				margin-bottom: 1.5vh;
-			}
-
-			a {
-				font-size: 0.7em;
-			}
-
-		}
-	</style>
+	<link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 	<div id="top-bar">Text Diff </div>
 	<div id="content-container">
-		<textarea 
-			type="text" 
-			id="left-input" 
-			autofocus
-			placeholder="Write here some text to compare."
-			></textarea>
+		<textarea type="text" id="left-input" autofocus placeholder="Write here some text to compare."></textarea>
 
-			<textarea 
-				type="text" 
-				id="right-input" 
-				autofocus
-				placeholder="Write here some text to compare against."
-			></textarea>
+		<textarea type="text" id="right-input" autofocus
+			placeholder="Write here some text to compare against."></textarea>
 
 		<div id="compare-button" onClick="compare()"> COMPARE</div>
 
@@ -180,35 +33,35 @@
 	<script>
 		// This hash will be used as a first element in every LCS.
 		const hash = 'e6783d7aaf8bb4'
-		
+
 		// output selector
-		function setOutPut(text){
+		function setOutPut(text) {
 			const output = document.querySelector('#output');
 			output.innerHTML = text
 		}
 
 		// If input has (. ! ?) divide it into sentences and then words, else divide it straight into words
-		function divideStringIntoSentences(string){				
-			return string.match(/[^\.!\?]+[\.!\?]+/g) 
+		function divideStringIntoSentences(string) {
+			return string.match(/[^\.!\?]+[\.!\?]+/g)
 				? string.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
 				: string.split(' ')
 		}
 
 		// Add hash at the beginning of each sentence, check for sentence amount & output response
-		function compareMultipleSentences(listX, listY){
+		function compareMultipleSentences(listX, listY) {
 			listX.map(sen => sen.unshift(hash))
 			listY.map(sen => sen.unshift(hash))
 
-			listX.length !== listY.length 
+			listX.length !== listY.length
 				? setOutPut(`<h2 style="color:#ff1145; font-weight: 200; text-align: center;">
 					Text boxes must have the same number of sentences! </h2>`)
-					
-				: setOutPut(listX.map((sen, i) => 
+
+				: setOutPut(listX.map((sen, i) =>
 					getDiff(lcsLengths(sen, listY[i]), sen, listY[i]).join(' ')).join(' '))
 		}
 
 		// Add hash at the beginning of each string & output edited words
-		function compareSingleSentence(listX, listY){	
+		function compareSingleSentence(listX, listY) {
 			listX.unshift(hash)
 			listY.unshift(hash)
 			setOutPut(getDiff(lcsLengths(listX, listY), listX, listY).join(' '))
@@ -216,12 +69,12 @@
 
 		/* MAIN CONTROLLER */
 		function compare() {
-			let listX =  document.getElementById("left-input").value;
-			let listY =  document.getElementById("right-input").value;
+			let listX = document.getElementById("left-input").value;
+			let listY = document.getElementById("right-input").value;
 
 			listX = divideStringIntoSentences(listX)
 			listY = divideStringIntoSentences(listY)
-			
+
 			Array.isArray(listX[0]) && Array.isArray(listY[0])
 				? compareMultipleSentences(listX, listY)
 				: compareSingleSentence(listX, listY)
@@ -264,9 +117,9 @@
 				if (posX == 0 || posY == 0) return "";
 
 				// Has match?
-				if (listX[posX - 1] == listY[posY - 1] 
-				// AND LEFT > ITSELF (is original LCS)
-				&& memo[posX][posY - 1] < memo[posX][posY] ) {
+				if (listX[posX - 1] == listY[posY - 1]
+					// AND LEFT > ITSELF (is original LCS)
+					&& memo[posX][posY - 1] < memo[posX][posY]) {
 
 					// Add the word into final string && Move up and left
 					finalString.push(listX[posX - 1])
@@ -317,26 +170,26 @@ Finally we have the the consecutive repeating repeating the symbols in LCS.
 `
 
 		// Run Test Example
-		window.addEventListener('load', function(event) {
+		window.addEventListener('load', function (event) {
 			let input1 = document.getElementById("left-input");
 			let input2 = document.getElementById("right-input");
-			
+
 			let i = 0;
 
 			setTimeout(function run() {
-			
-				if(i < testInput1.length){
+
+				if (i < testInput1.length) {
 					input1.innerHTML += testInput1[i]
 				}
 
-				if(i < testInput2.length){
+				if (i < testInput2.length) {
 					input2.innerHTML += testInput2[i]
 				}
-				
+
 				i++
 				compare(testInput1, testInput2)
 
-				if (i < Math.max(testInput1.length, testInput2.length)){
+				if (i < Math.max(testInput1.length, testInput2.length)) {
 					setTimeout(run, 150);
 				} else {
 					setTimeout(() => {
@@ -346,7 +199,7 @@ Finally we have the the consecutive repeating repeating the symbols in LCS.
 							You can now enter your own text to test the application! </h2>`);
 					}, 7300);
 				}
-			}, 100);		
+			}, 100);
 		});
 	</script>
 </body>
