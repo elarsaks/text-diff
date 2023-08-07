@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 
 <head>
@@ -7,6 +6,7 @@
 	<title>Text Diff</title>
 	<meta name="Elar Saks" content="SitePoint">
 	<meta name="viewport" content="width=device-width">
+	<!-- TODO: SEO -->
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="./style.css">
@@ -15,193 +15,16 @@
 <body>
 	<div id="top-bar">Text Diff </div>
 	<div id="content-container">
-		<textarea type="text" id="left-input" autofocus placeholder="Write here some text to compare."></textarea>
-
-		<textarea type="text" id="right-input" autofocus
-			placeholder="Write here some text to compare against."></textarea>
-
-		<div id="compare-button" onClick="compare()"> COMPARE</div>
-
+		<textarea id="left-input" placeholder="Write here some text to compare."></textarea>
+		<textarea id="right-input" placeholder="Write here some text to compare against."></textarea>
+		<div id="compare-button"> COMPARE</div>
 		<div id="output"></div>
 	</div>
-
 	<h1>
 		<a href="https://www.linkedin.com/in/elarsaks/" target="_blank">ELAR SAKS</a>
 	</h1>
 
-
-	<script>
-		// This hash will be used as a first element in every LCS.
-		const hash = 'e6783d7aaf8bb4'
-
-		// output selector
-		function setOutPut(text) {
-			const output = document.querySelector('#output');
-			output.innerHTML = text
-		}
-
-		// If input has (. ! ?) divide it into sentences and then words, else divide it straight into words
-		function divideStringIntoSentences(string) {
-			return string.match(/[^\.!\?]+[\.!\?]+/g)
-				? string.match(/[^\.!\?]+[\.!\?]+/g).map(sen => sen.split(' '))
-				: string.split(' ')
-		}
-
-		// Add hash at the beginning of each sentence, check for sentence amount & output response
-		function compareMultipleSentences(listX, listY) {
-			listX.map(sen => sen.unshift(hash))
-			listY.map(sen => sen.unshift(hash))
-
-			listX.length !== listY.length
-				? setOutPut(`<h2 style="color:#ff1145; font-weight: 200; text-align: center;">
-					Text boxes must have the same number of sentences! </h2>`)
-
-				: setOutPut(listX.map((sen, i) =>
-					getDiff(lcsLengths(sen, listY[i]), sen, listY[i]).join(' ')).join(' '))
-		}
-
-		// Add hash at the beginning of each string & output edited words
-		function compareSingleSentence(listX, listY) {
-			listX.unshift(hash)
-			listY.unshift(hash)
-			setOutPut(getDiff(lcsLengths(listX, listY), listX, listY).join(' '))
-		}
-
-		/* MAIN CONTROLLER */
-		function compare() {
-			let listX = document.getElementById("left-input").value;
-			let listY = document.getElementById("right-input").value;
-
-			listX = divideStringIntoSentences(listX)
-			listY = divideStringIntoSentences(listY)
-
-			Array.isArray(listX[0]) && Array.isArray(listY[0])
-				? compareMultipleSentences(listX, listY)
-				: compareSingleSentence(listX, listY)
-		}
-
-		/* CREATE MATRIX AND MAP LCS LENGTHS ONTO IT */
-		function lcsLengths(listX, listY) {
-			const lenX = listX.length;
-			const lenY = listY.length;
-
-			// Create empty matrix
-			let memo = [lenX + 1];
-			for (var i = 0; i < lenX + 1; i++) {
-				memo[i] = [lenY + 1];
-				for (var j = 0; j < lenY + 1; j++) {
-					memo[i][j] = 0;
-				}
-			}
-
-			// Save LCS length at each position into matrix
-			for (var i = 1; i < lenX + 1; i++) {
-				for (var j = 1; j < lenY + 1; j++) {
-					listX[i - 1] == listY[j - 1]
-						? memo[i][j] = memo[i - 1][j - 1] + 1
-						: memo[i][j] = Math.max(memo[i][j - 1], memo[i - 1][j])
-				}
-			}
-
-			return memo;
-		}
-
-		/* MAP STRING DIFFERENCES TO THE FINAL STRING */
-		function getDiff(memo, listX, listY) {
-			let finalString = []
-
-			// BACKTRACK VALUES FROM MATRIX
-			function lcsBackTrack(memo, listX, listY, posX, posY) {
-
-				// Stop recursive loop when the position === 0 (Base case)
-				if (posX == 0 || posY == 0) return "";
-
-				// Has match?
-				if (listX[posX - 1] == listY[posY - 1]
-					// AND LEFT > ITSELF (is original LCS)
-					&& memo[posX][posY - 1] < memo[posX][posY]) {
-
-					// Add the word into final string && Move up and left
-					finalString.push(listX[posX - 1])
-					return lcsBackTrack(memo, listX, listY, posX - 1, posY - 1) + listX[posX - 1];
-
-				} else {
-
-					// If LEFT > UP
-					if (memo[posX][posY - 1] > memo[posX - 1][posY]) {
-
-						// Add added item to final string && Move up
-						finalString.push(`<ins>${listY[posY - 1]}</ins>`)
-						return lcsBackTrack(memo, listX, listY, posX, posY - 1); // Y-axis
-
-					} else {
-
-						// Add deleted item to final string && Move left
-						finalString.push(`<del>${listX[posX - 1]}</del>`)
-						return lcsBackTrack(memo, listX, listY, posX - 1, posY);
-					}
-				}
-			}
-
-			lcsBackTrack(memo, listX, listY, listX.length, listY.length,)
-			finalString = finalString.filter((word) => word !== hash)
-			finalString.push('<br>')
-
-			return finalString.reverse()
-		}
-
-		// Test inputs
-		const testInput1 = `Take a minute to watch a couple of example inputs.
-First sentence has a word to it.
-Followed by a sentence with the word removed from it.
-Third sentence has a word and removed from it.
-sentence is about changing the first word of the sentence (because it might stay out of LCS).
-Completely different string totally changed to show indexing of words.
-Finally we have the the symbols in LCS.
-`
-
-		const testInput2 = `Take a minute to watch a couple of example inputs.
-First sentence has a word added to it.
-Followed by a sentence with the word from it.
-Third sentence has a word added and from it.
-Fourth is about changing the first word of the sentence (because it might stay out of LCS).
-And now we have a string to show the indexing of words.
-Finally we have the the consecutive repeating repeating the symbols in LCS.
-`
-
-		// Run Test Example
-		window.addEventListener('load', function (event) {
-			let input1 = document.getElementById("left-input");
-			let input2 = document.getElementById("right-input");
-
-			let i = 0;
-
-			setTimeout(function run() {
-
-				if (i < testInput1.length) {
-					input1.innerHTML += testInput1[i]
-				}
-
-				if (i < testInput2.length) {
-					input2.innerHTML += testInput2[i]
-				}
-
-				i++
-				compare(testInput1, testInput2)
-
-				if (i < Math.max(testInput1.length, testInput2.length)) {
-					setTimeout(run, 150);
-				} else {
-					setTimeout(() => {
-						input1.innerHTML = null
-						input2.innerHTML = null
-						setOutPut(`<h2 style="color:green; font-weight: 200; text-align: center;">
-							You can now enter your own text to test the application! </h2>`);
-					}, 7300);
-				}
-			}, 100);
-		});
-	</script>
+	<script src="./script.js"></script>
 </body>
 
 </html>
