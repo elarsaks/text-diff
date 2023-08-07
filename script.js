@@ -1,3 +1,15 @@
+/**
+ * Text Comparison Tool
+ *
+ * This web application allows users to compare two pieces of text and visually see the differences between them.
+ * Differences are highlighted with the following conventions:
+ * - <ins> tags indicate added words.
+ * - <del> tags indicate removed words.
+ *
+ * Users can input single sentences or multiple sentences for comparison. The application will then display the differences
+ * between the two inputs, highlighting added or removed words.
+ */
+
 // This hash will be used as the first element in every LCS.
 const hash = "e6783d7aaf8bb4";
 
@@ -27,7 +39,7 @@ function compareMultipleSentences(listX, listY) {
           .map((sen, i) =>
             getDiff(lcsLengths(sen, listY[i]), sen, listY[i]).join(" ")
           )
-          .join(" ")
+          .join("<br>")
       );
 }
 
@@ -104,8 +116,10 @@ function getDiff(memo, listX, listY) {
   return finalString.filter((word) => word !== hash).reverse();
 }
 
+//* DUMMY DATA
+
 // Test inputs
-const testInput1 = `𝗧𝗲𝘅𝘁 𝗖𝗼𝗺𝗽𝗮𝗿𝗶𝘀𝗼𝗻 𝗧𝗼𝗼𝗹
+const testInput1 = `𝗧𝗲𝘅𝘁 𝗖𝗼𝗺𝗽𝗮𝗿𝗶𝘀𝗼𝗻 𝗧𝗼𝗼𝗹. 
 This web application allows users to compare two pieces of text and visually see the differences between them.
 Observe the example inputs below.
 The first sentence has a word missing.
@@ -116,7 +130,7 @@ Here's a completely different string to showcase word indexing.
 Lastly, we demonstrate symbols in the LCS.
 `;
 
-const testInput2 = `𝗧𝗲𝘅𝘁 𝗖𝗼𝗺𝗽𝗮𝗿𝗶𝘀𝗼𝗻 𝗧𝗼𝗼𝗹
+const testInput2 = `𝗧𝗲𝘅𝘁 𝗖𝗼𝗺𝗽𝗮𝗿𝗶𝘀𝗼𝗻 𝗧𝗼𝗼𝗹. 
 This web application allows users to compare two pieces of text and visually see the differences between them.
 Observe the example inputs below.
 The first sentence has a word added.
@@ -127,7 +141,8 @@ Now, we present a string to demonstrate word indexing.
 Lastly, we show consecutive repeating symbols in the LCS.
 `;
 
-// Run test example on page load
+//* RUN TEST EXAMPLE ON PAGE LOAD ///
+
 window.addEventListener("load", function () {
   const input1 = document.getElementById("left-input");
   const input2 = document.getElementById("right-input");
