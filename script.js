@@ -105,22 +105,26 @@ function getDiff(memo, listX, listY) {
 }
 
 // Test inputs
-const testInput1 = `Take a minute to watch a couple of example inputs.
-First sentence has a word to it.
-Followed by a sentence with the word removed from it.
-Third sentence has a word and removed from it.
-sentence is about changing the first word of the sentence (because it might stay out of LCS).
-Completely different string totally changed to show indexing of words.
-Finally we have the the symbols in LCS.
+const testInput1 = `𝗧𝗲𝘅𝘁 𝗖𝗼𝗺𝗽𝗮𝗿𝗶𝘀𝗼𝗻 𝗧𝗼𝗼𝗹
+This web application allows users to compare two pieces of text and visually see the differences between them.
+Observe the example inputs below.
+The first sentence has a word missing.
+The next sentence has the word removed.
+The third sentence has a word and it's removed.
+This sentence demonstrates changing the first word (as it might be excluded from LCS).
+Here's a completely different string to showcase word indexing.
+Lastly, we demonstrate symbols in the LCS.
 `;
 
-const testInput2 = `Take a minute to watch a couple of example inputs.
-First sentence has a word added to it.
-Followed by a sentence with the word from it.
-Third sentence has a word added and from it.
-Fourth is about changing the first word of the sentence (because it might stay out of LCS).
-And now we have a string to show the indexing of words.
-Finally we have the the consecutive repeating repeating the symbols in LCS.
+const testInput2 = `𝗧𝗲𝘅𝘁 𝗖𝗼𝗺𝗽𝗮𝗿𝗶𝘀𝗼𝗻 𝗧𝗼𝗼𝗹
+This web application allows users to compare two pieces of text and visually see the differences between them.
+Observe the example inputs below.
+The first sentence has a word added.
+The next sentence omits the word.
+The third sentence has a word added and removed.
+This sentence is about changing the first word (as it might be excluded from LCS).
+Now, we present a string to demonstrate word indexing.
+Lastly, we show consecutive repeating symbols in the LCS.
 `;
 
 // Run test example on page load
@@ -141,14 +145,14 @@ window.addEventListener("load", function () {
 
     if (i >= Math.max(testInput1.length, testInput2.length)) {
       clearInterval(interval);
-      setTimeout(() => {
+      /*  setTimeout(() => {
         input1.value = "";
         input2.value = "";
         setOutPut(`<h2 style="color:green; font-weight: 200; text-align: center;">
                         You can now enter your own text to test the application! </h2>`);
-      }, 7300);
+      }, 10000); */
     }
-  }, 150);
+  }, 10);
 });
 
 // Add event listener for the compare button
