@@ -4,7 +4,7 @@ Text-Diff is a user-friendly tool designed to compare and highlight differences 
 
 ## Try it Out
 
-- **Online**: [Visit our hosted version](https://elarsaks.github.io/text-diff/)
+- **Online**: <a href="https://elarsaks.github.io/text-diff/" target="_blank">Visit our hosted version</a>
 - **Locally**: Download the `index.html` file and open it in your preferred web browser.
 
 ## Features
