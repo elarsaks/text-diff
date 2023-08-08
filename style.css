@@ -133,7 +133,7 @@ h1 > a {
     font-size: 0.9em;
     font-weight: 600;
     letter-spacing: 0.1em;
-    transition: letter-spacing 2s ease, color 2s ease;
+    transition: letter-spacing 1s ease, color 1s ease;
 }
 
 h1 > a:hover {
