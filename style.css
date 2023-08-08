@@ -122,14 +122,24 @@ del {
 
 h1 {
   text-align: center;
-  margin: 0.5em;
+  margin: 1em;
 }
 
-a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 0.9em;
-  font-weight: lighter;
+
+
+h1 > a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: letter-spacing 2s ease, color 2s ease;
+}
+
+h1 > a:hover {
+    color: #2c92fe;
+    letter-spacing: 0.3em;
+    transition: letter-spacing 0.5s ease, color 0.5s ease;
 }
 
 @media (max-width: 769px) {
