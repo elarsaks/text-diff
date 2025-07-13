@@ -150,30 +150,21 @@ footer {
 }
 
 footer nav a {
-  color: #ff9900;
   text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2em;
+  color: #fff;
+  font-size: 1.8em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  transition: letter-spacing 1s ease, color 1s ease;
 }
 
 footer nav a:hover {
-  text-decoration: underline;
+  color: #2c92fe;
+  letter-spacing: 0.3em;
+  transition: letter-spacing 0.5s ease, color 0.5s ease;
 }
 
-h1 > a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    transition: letter-spacing 1s ease, color 1s ease;
-}
-
-h1 > a:hover {
-    color: #2c92fe;
-    letter-spacing: 0.3em;
-    transition: letter-spacing 0.5s ease, color 0.5s ease;
-}
+/* Removed h1 > a styles as the link is now in the footer */
 
 @media (max-width: 769px) {
   #top-bar h1 {
@@ -203,6 +194,6 @@ h1 > a:hover {
   }
 
   footer nav a {
-    font-size: 0.7em;
+    font-size: 1.2em;
   }
 }
