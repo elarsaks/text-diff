@@ -3,7 +3,6 @@ body {
   padding: 0;
   font-family: Arial, Monospace, sans-serif;
   background-color: rgb(32, 32, 32);
-  /* This fancy gradient background is not written by me, I found it on Stack OverFlow. */
   background-image: linear-gradient(
       to right,
       rgba(0, 0, 0, 1),
@@ -32,7 +31,7 @@ body {
   background-position: 0px 0px, 0px 0px, 5px 5px, 0px 0px;
 }
 
-#top-bar {
+#top-bar h1 {
   display: flex;
   flex: 1;
   justify-content: center;
@@ -44,6 +43,7 @@ body {
   padding: 0.5em;
   padding-top: 0.5em;
   white-space: pre-wrap;
+  margin: 0;
 }
 
 #content-container {
@@ -54,6 +54,14 @@ body {
   margin-left: auto;
   margin-right: auto;
   color: #228dff;
+}
+
+/* Section containing the text inputs */
+section[aria-label="Text comparison inputs"] {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 #compare-button {
@@ -69,8 +77,9 @@ body {
   border-radius: 0.1em;
   cursor: pointer;
   transition: all 0.25s;
-  background-color: rgba(30, 30, 30, 0.3);
+  background-color: rgba(39, 39, 39, 0.3);
   border: 1px solid #fff;
+  color: #228dff;
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -95,6 +104,7 @@ textarea {
   padding: 0.5em;
   margin-bottom: 1.5vh;
   white-space: normal;
+  box-sizing: border-box;
 }
 
 #output {
@@ -125,7 +135,30 @@ h1 {
   margin: 1em;
 }
 
+/* Semantic HTML improvements */
+header {
+  display: block;
+}
 
+main {
+  display: block;
+}
+
+footer {
+  text-align: center;
+  margin: 1em;
+}
+
+footer nav a {
+  color: #ff9900;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+footer nav a:hover {
+  text-decoration: underline;
+}
 
 h1 > a {
     text-decoration: none;
@@ -143,12 +176,20 @@ h1 > a:hover {
 }
 
 @media (max-width: 769px) {
-  #top-bar {
+  #top-bar h1 {
     font-size: 2em;
   }
 
   #content-container {
     width: 95%;
+  }
+  
+  section[aria-label="Text comparison inputs"] {
+    flex-direction: column;
+  }
+
+  #text-area-section {
+    width: 100%;
   }
 
   textarea {
@@ -161,7 +202,7 @@ h1 > a:hover {
     margin-bottom: 1.5vh;
   }
 
-  a {
+  footer nav a {
     font-size: 0.7em;
   }
 }

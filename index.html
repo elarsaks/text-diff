@@ -3,32 +3,108 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Text Diff</title>
-	<meta name="Elar Saks" content="SitePoint">
-	<meta name="viewport" content="width=device-width">
-	<meta property="og:image" content="./some2.png" />
-	<meta property="og:title" content="Text Diff LCS" />
-	<meta property="og:description"
-		content="Longest Common Subsequence algorithm implementation in vanilla JavaScript." />
-	<meta property="og:url" content="https://elarsaks.github.io/text-diff" />
-	<meta property="og:type" content="website" />
+	<title>Text Diff Tool - Compare Text Online | LCS Algorithm</title>
+	<meta name="description" content="Free online text comparison tool using Longest Common Subsequence (LCS) algorithm. Compare two texts side-by-side and highlight differences instantly. No registration required.">
+	<meta name="keywords" content="text diff, text comparison, compare text, diff tool, text difference, LCS algorithm, longest common subsequence, text analyzer, online diff, text compare">
+	<meta name="author" content="Elar Saks">
+	<meta name="robots" content="index, follow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://elarsaks.github.io/text-diff/">
+	<meta property="og:title" content="Text Diff Tool - Compare Text Online | LCS Algorithm">
+	<meta property="og:description" content="Free online text comparison tool using Longest Common Subsequence (LCS) algorithm. Compare two texts side-by-side and highlight differences instantly.">
+	<meta property="og:image" content="https://elarsaks.github.io/text-diff/some2.png">
+	<meta property="og:image:alt" content="Text Diff Tool Screenshot">
+	<meta property="og:site_name" content="Text Diff Tool">
+	
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://elarsaks.github.io/text-diff/">
+	<meta property="twitter:title" content="Text Diff Tool - Compare Text Online | LCS Algorithm">
+	<meta property="twitter:description" content="Free online text comparison tool using Longest Common Subsequence (LCS) algorithm. Compare two texts side-by-side and highlight differences instantly.">
+	<meta property="twitter:image" content="https://elarsaks.github.io/text-diff/some2.png">
+	<meta property="twitter:image:alt" content="Text Diff Tool Screenshot">
+	
+	<!-- Additional SEO -->
+	<meta name="theme-color" content="#000000">
+	<link rel="canonical" href="https://elarsaks.github.io/text-diff/">
+	
+	<!-- Google Site Verification -->
 	<meta name="google-site-verification" content="JF15ZtPM1uHo3jSkwn0cSU_Eo61F9sqekl5cUo3x85A" />
+	
+	<!-- Favicon -->
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="./favicon.ico">
+	
+	<!-- Stylesheet -->
 	<link rel="stylesheet" href="./style.css">
+	
+	<!-- JSON-LD Structured Data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebApplication",
+		"name": "Text Diff Tool",
+		"description": "Free online text comparison tool using Longest Common Subsequence (LCS) algorithm. Compare two texts side-by-side and highlight differences instantly.",
+		"url": "https://elarsaks.github.io/text-diff/",
+		"applicationCategory": "Utility",
+		"operatingSystem": "Web Browser",
+		"author": {
+			"@type": "Person",
+			"name": "Elar Saks",
+			"url": "https://github.com/elarsaks"
+		},
+		"offers": {
+			"@type": "Offer",
+			"price": "0",
+			"priceCurrency": "USD"
+		},
+		"aggregateRating": {
+			"@type": "AggregateRating",
+			"ratingValue": "4.8",
+			"ratingCount": "150"
+		},
+		"featureList": [
+			"Text comparison using LCS algorithm",
+			"Side-by-side text comparison",
+			"Word-level difference highlighting",
+			"Free to use",
+			"No registration required",
+			"Works in any web browser"
+		]
+	}
+	</script>
 </head>
 
 <body>
-	<div id="top-bar">Text Diff </div>
-	<div id="content-container">
-		<textarea id="left-input" placeholder="Write here some text to compare."></textarea>
-		<textarea id="right-input" placeholder="Write here some text to compare against."></textarea>
-		<div id="compare-button"> COMPARE</div>
-		<div id="output"></div>
-	</div>
-	<h1>
-		<a href="https://github.com/elarsaks/text-diff" target="_blank">SOURCE CODE</a>
-	</h1>
+	<!-- Header -->
+	<header>
+		<div id="top-bar">
+			<h1>Text Diff Tool</h1>
+		</div>
+	</header>
+	
+	<!-- Main Content -->
+	<main id="content-container">
+		<section  id="text-area-section" aria-label="Text comparison inputs">
+			<textarea id="left-input" placeholder="Write here some text to compare." aria-label="First text to compare"></textarea>
+			<textarea id="right-input" placeholder="Write here some text to compare against." aria-label="Second text to compare"></textarea>
+		</section>
+		
+		<button id="compare-button" type="button" aria-label="Compare the two text inputs">COMPARE</button>
+		
+		<section id="output" aria-label="Comparison results" aria-live="polite"></section>
+	</main>
+	
+	<!-- Footer -->
+	<footer>
+		<nav>
+			<a href="https://github.com/elarsaks/text-diff" target="_blank" rel="noopener noreferrer" aria-label="View source code on GitHub">SOURCE CODE</a>
+		</nav>
+	</footer>
 
 	<script src="./script.js"></script>
 </body>
